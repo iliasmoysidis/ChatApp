@@ -1,0 +1,103 @@
+{
+  "hash": "76514222",
+  "configHash": "ce4b2eee",
+  "lockfileHash": "ec8a7760",
+  "browserHash": "f4476968",
+  "optimized": {
+    "@angular/common/http": {
+      "src": "../../../../../../node_modules/@angular/common/fesm2022/http.mjs",
+      "file": "@angular_common_http.js",
+      "fileHash": "34c28854",
+      "needsInterop": false
+    },
+    "@angular/core": {
+      "src": "../../../../../../node_modules/@angular/core/fesm2022/core.mjs",
+      "file": "@angular_core.js",
+      "fileHash": "6fc44191",
+      "needsInterop": false
+    },
+    "@angular/platform-browser": {
+      "src": "../../../../../../node_modules/@angular/platform-browser/fesm2022/platform-browser.mjs",
+      "file": "@angular_platform-browser.js",
+      "fileHash": "53335aae",
+      "needsInterop": false
+    },
+    "@angular/platform-browser/animations": {
+      "src": "../../../../../../node_modules/@angular/platform-browser/fesm2022/animations.mjs",
+      "file": "@angular_platform-browser_animations.js",
+      "fileHash": "a2e5182d",
+      "needsInterop": false
+    },
+    "@angular/router": {
+      "src": "../../../../../../node_modules/@angular/router/fesm2022/router.mjs",
+      "file": "@angular_router.js",
+      "fileHash": "d89bfd45",
+      "needsInterop": false
+    },
+    "@nebular/eva-icons": {
+      "src": "../../../../../../node_modules/@nebular/eva-icons/fesm2022/nebular-eva-icons.mjs",
+      "file": "@nebular_eva-icons.js",
+      "fileHash": "e87b401c",
+      "needsInterop": false
+    },
+    "@nebular/theme": {
+      "src": "../../../../../../node_modules/@nebular/theme/fesm2022/nebular-theme.mjs",
+      "file": "@nebular_theme.js",
+      "fileHash": "52c47f5a",
+      "needsInterop": false
+    },
+    "keycloak-angular": {
+      "src": "../../../../../../node_modules/keycloak-angular/fesm2022/keycloak-angular.mjs",
+      "file": "keycloak-angular.js",
+      "fileHash": "2545f8a2",
+      "needsInterop": false
+    },
+    "keycloak-js": {
+      "src": "../../../../../../node_modules/keycloak-js/lib/keycloak.js",
+      "file": "keycloak-js.js",
+      "fileHash": "3cbe6c97",
+      "needsInterop": false
+    },
+    "@angular/common": {
+      "src": "../../../../../../node_modules/@angular/common/fesm2022/common.mjs",
+      "file": "@angular_common.js",
+      "fileHash": "524bfc9a",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-F6HLTWD2": {
+      "file": "chunk-F6HLTWD2.js"
+    },
+    "chunk-RIHOY4BZ": {
+      "file": "chunk-RIHOY4BZ.js"
+    },
+    "chunk-L2LRJJ7D": {
+      "file": "chunk-L2LRJJ7D.js"
+    },
+    "chunk-LR7TLK6Z": {
+      "file": "chunk-LR7TLK6Z.js"
+    },
+    "chunk-GRLAYVSI": {
+      "file": "chunk-GRLAYVSI.js"
+    },
+    "chunk-MP45BM5R": {
+      "file": "chunk-MP45BM5R.js"
+    },
+    "chunk-WDOQFQCE": {
+      "file": "chunk-WDOQFQCE.js"
+    },
+    "chunk-ZHU264VY": {
+      "file": "chunk-ZHU264VY.js"
+    },
+    "chunk-4P7I4DUV": {
+      "file": "chunk-4P7I4DUV.js"
+    },
+    "chunk-3IJRCXPE": {
+      "file": "chunk-3IJRCXPE.js"
+    },
+    "chunk-TXDUYLVM": {
+      "file": "chunk-TXDUYLVM.js"
+    }
+  }
+}
