@@ -1,0 +1,11 @@
+.header {
+  display: flex;
+  justify-content: space-between; /* Space out the items */
+  width: 100%; /* Ensure the header div takes up the full width */
+  align-items: center; /* Vertically center the text and button */
+}
+
+.header-title {
+  font-size: 24px; /* Adjust the font size to your preference */
+  font-weight: bold; /* Make the text bold */
+}

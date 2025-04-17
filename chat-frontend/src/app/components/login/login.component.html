@@ -1,0 +1,40 @@
+<nb-layout>
+  <nb-layout-column class="credentials-layout">
+    <nb-card class="credentials-card">
+      <nb-card-header>
+        <span class="header-title">Welcome to Chat App</span>
+      </nb-card-header>
+      <nb-card-body>
+        <div>
+          <input
+            type="text"
+            nbInput
+            placeholder="Username"
+            style="margin-bottom: 10px"
+          />
+        </div>
+        <div>
+          <input type="text" nbInput placeholder="Password" />
+        </div>
+      </nb-card-body>
+      <nb-card-footer>
+        <div>
+          <button
+            nbButton
+            shape="rectangle"
+            status="primary"
+            style="margin-right: 10px"
+          >
+            <nb-icon icon="log-out-outline"></nb-icon>
+            Login
+          </button>
+
+          <button nbButton shape="rectangle" status="success">
+            <nb-icon icon="person-outline"></nb-icon>
+            Register
+          </button>
+        </div>
+      </nb-card-footer>
+    </nb-card>
+  </nb-layout-column>
+</nb-layout>

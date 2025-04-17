@@ -1,0 +1,11 @@
+.header-title {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.credentials-layout {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}

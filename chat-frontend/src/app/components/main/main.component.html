@@ -1,0 +1,36 @@
+<nb-layout>
+  <nb-layout-header>
+    <div class="header">
+      <span class="header-title">Chat App!</span>
+      <div *ngIf="isAuthenticated">
+        <button nbButton shape="rectangle" status="primary" (click)="logout()">
+          <nb-icon icon="log-out-outline"></nb-icon>
+          Logout
+        </button>
+      </div>
+
+      <div *ngIf="!isAuthenticated">
+        <button
+          nbButton
+          shape="rectangle"
+          status="primary"
+          (click)="login()"
+          style="margin-right: 20px"
+        >
+          <nb-icon icon="log-out-outline"></nb-icon>
+          Login
+        </button>
+
+        <button
+          nbButton
+          shape="rectangle"
+          status="success"
+          (click)="register()"
+        >
+          <nb-icon icon="log-out-outline"></nb-icon>
+          Register
+        </button>
+      </div>
+    </div>
+  </nb-layout-header>
+</nb-layout>

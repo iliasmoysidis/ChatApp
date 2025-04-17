@@ -1,0 +1,15 @@
+{
+	"realm": "chat-realm",
+	"enabled": true,
+	"clients": [
+		{
+			"clientId": "chat-app",
+			"enabled": true,
+			"clientAuthenticatorType": "none",
+			"secret": "my-client-secret",
+			"protocol": "openid-connect",
+			"redirectUris": ["http://localhost:4200/*"],
+			"webOrigins": ["http://localhost:4200"]
+		}
+	]
+}

@@ -1,0 +1,46 @@
+version: "3.6"
+
+services:
+    keycloak_web:
+        image: quay.io/keycloak/keycloak:latest
+        container_name: keycloak-server
+        volumes:
+            - ./keycloak/realms:/opt/keycloak/data/import
+        environment:
+            KC_DB: postgres
+            KC_DB_URL: jdbc:postgresql://keycloakdb:5432/keycloak
+            KC_DB_USERNAME: ${POSTGRES_USERNAME}
+            KC_DB_PASSWORD: ${POSTGRES_PASSWORD}
+
+            KC_HOSTNAME: localhost
+            KC_HOSTNAME_PORT: 8080
+            KC_HOSTNAME_STRICT: false
+            KC_HOSTNAME_STRICT_HTTPS: false
+
+            KC_LOG_LEVEL: info
+            KC_METRICS_ENABLED: true
+            KC_HEALTH_ENABLED: true
+            KEYCLOAK_ADMIN: ${ADMIN_USERNAME}
+            KEYCLOAK_ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+        command: start-dev  --import-realm
+        depends_on:
+            - keycloakdb
+        ports:
+            - 8080:8080
+        env_file:
+            - .env
+
+    keycloakdb:
+        container_name: postgres-server
+        image: postgres:15
+        volumes:
+            - postgres_data:/var/lib/postgresql/data
+        environment:
+            POSTGRES_DB: keycloak
+            POSTGRES_USER: ${POSTGRES_USERNAME}
+            POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+        env_file:
+            - .env
+
+volumes:
+    postgres_data:
