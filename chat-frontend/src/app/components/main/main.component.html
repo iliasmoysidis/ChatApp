@@ -27,10 +27,14 @@
           status="success"
           (click)="register()"
         >
-          <nb-icon icon="log-out-outline"></nb-icon>
+          <nb-icon icon="person-add-outline"></nb-icon>
           Register
         </button>
       </div>
     </div>
   </nb-layout-header>
+
+  <nb-layout-column *ngIf="isAuthenticated"
+    ><app-chat></app-chat>
+  </nb-layout-column>
 </nb-layout>

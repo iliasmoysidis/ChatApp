@@ -1,10 +1,11 @@
-import { Component, effect, inject, OnInit } from '@angular/core';
+import { Component, effect, inject } from '@angular/core';
 import Keycloak from 'keycloak-js';
 import {
   NbButtonModule,
   NbLayoutModule,
   NbIconModule,
   NbThemeModule,
+  NbChatModule,
 } from '@nebular/theme';
 import { CommonModule } from '@angular/common';
 import {
@@ -13,6 +14,7 @@ import {
   ReadyArgs,
   typeEventArgs,
 } from 'keycloak-angular';
+import { ChatComponent } from '../chat/chat.component';
 
 @Component({
   selector: 'app-main',
@@ -22,6 +24,8 @@ import {
     NbButtonModule,
     NbThemeModule,
     CommonModule,
+    NbChatModule,
+    ChatComponent,
   ],
   templateUrl: './main.component.html',
   styleUrl: './main.component.css',
