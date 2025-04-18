@@ -15,6 +15,8 @@ import {
   typeEventArgs,
 } from 'keycloak-angular';
 import { ChatComponent } from '../chat/chat.component';
+import { HeaderComponent } from '../header/header.component';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-main',
@@ -26,38 +28,15 @@ import { ChatComponent } from '../chat/chat.component';
     CommonModule,
     NbChatModule,
     ChatComponent,
+    HeaderComponent,
   ],
   templateUrl: './main.component.html',
   styleUrl: './main.component.css',
 })
 export class MainComponent {
-  public isAuthenticated = false;
+  constructor(private auth: AuthService) {}
 
-  constructor(private readonly keycloak: Keycloak) {
-    const keycloakSignal = inject(KEYCLOAK_EVENT_SIGNAL);
-
-    effect(() => {
-      const keycloakEvent = keycloakSignal();
-
-      if (keycloakEvent.type === KeycloakEventType.Ready) {
-        this.isAuthenticated = typeEventArgs<ReadyArgs>(keycloakEvent.args);
-      }
-
-      if (keycloakEvent.type === KeycloakEventType.AuthLogout) {
-        this.isAuthenticated = false;
-      }
-    });
-  }
-
-  logout() {
-    this.keycloak.logout();
-  }
-
-  login() {
-    this.keycloak.login();
-  }
-
-  register() {
-    this.keycloak.register();
+  get isAuthenticated() {
+    return this.auth.isAuthenticated();
   }
 }
