@@ -1,22 +1,18 @@
-import { Component, effect, inject } from '@angular/core';
-import Keycloak from 'keycloak-js';
+import { Component } from '@angular/core';
 import {
   NbButtonModule,
   NbLayoutModule,
   NbIconModule,
   NbThemeModule,
   NbChatModule,
+  NbTabsetModule,
+  NbCardModule,
 } from '@nebular/theme';
 import { CommonModule } from '@angular/common';
-import {
-  KEYCLOAK_EVENT_SIGNAL,
-  KeycloakEventType,
-  ReadyArgs,
-  typeEventArgs,
-} from 'keycloak-angular';
 import { ChatComponent } from '../chat/chat.component';
 import { HeaderComponent } from '../header/header.component';
 import { AuthService } from '../../services/auth.service';
+import { TabsComponent } from '../tabs/tabs.component';
 
 @Component({
   selector: 'app-main',
@@ -29,6 +25,9 @@ import { AuthService } from '../../services/auth.service';
     NbChatModule,
     ChatComponent,
     HeaderComponent,
+    NbTabsetModule,
+    NbCardModule,
+    TabsComponent,
   ],
   templateUrl: './main.component.html',
   styleUrl: './main.component.css',

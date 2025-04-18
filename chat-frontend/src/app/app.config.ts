@@ -14,6 +14,7 @@ import {
   NbIconModule,
   NbCardModule,
   NbChatModule,
+  NbSidebarModule,
 } from '@nebular/theme';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
@@ -31,7 +32,8 @@ export const appConfig: ApplicationConfig = {
       NbLayoutModule,
       BrowserAnimationsModule,
       NbCardModule,
-      NbChatModule
+      NbChatModule,
+      NbSidebarModule
     ),
   ],
 };

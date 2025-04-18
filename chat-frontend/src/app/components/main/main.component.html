@@ -3,7 +3,11 @@
     <app-header></app-header>
   </nb-layout-header>
 
-  <nb-layout-column *ngIf="isAuthenticated"
+  <nb-layout-column *ngIf="isAuthenticated" style="flex: 2"
     ><app-chat></app-chat>
+  </nb-layout-column>
+
+  <nb-layout-column *ngIf="isAuthenticated" style="flex: 1">
+    <app-tabs></app-tabs>
   </nb-layout-column>
 </nb-layout>
