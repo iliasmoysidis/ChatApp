@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { NbButtonModule, NbIconModule } from '@nebular/theme';
 import Keycloak from 'keycloak-js';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-header',

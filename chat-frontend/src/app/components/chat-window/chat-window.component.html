@@ -1,4 +1,4 @@
-<nb-chat title="Nebular Conversational UI">
+<nb-chat [title]="user ? user.name : 'Welcome to Chat App'">
   <nb-chat-message
     *ngFor="let msg of messages"
     [type]="msg.type"

@@ -1,0 +1,29 @@
+<nb-card size="small">
+  <nb-card-header>
+    <div class="header">
+      <span class="header-title">Chat</span>
+      <div class="option-icons">
+        <nb-icon
+          class="filter-icon"
+          icon="funnel-outline"
+          title="Filter"
+        ></nb-icon>
+        <nb-icon
+          class="new-chat-icon"
+          icon="plus-square-outline"
+          title="New Chat"
+        ></nb-icon>
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-list>
+    <nb-list-item
+      class="chat-item"
+      [ngClass]="{ highlighted: selectedUser === user }"
+      *ngFor="let user of users"
+      (click)="onClick(user)"
+    >
+      <nb-user [name]="user.name" [title]="user.title"> </nb-user>
+    </nb-list-item>
+  </nb-list>
+</nb-card>
