@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { NbCardModule, NbChatModule } from '@nebular/theme';
 import { ChatService } from '../../services/chat/chat.service';
 import { User } from '../../interfaces/user.interface';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-chat-window',
-  imports: [NbChatModule, NbCardModule],
+  imports: [NbChatModule, NbCardModule, CommonModule],
   templateUrl: './chat-window.component.html',
   styleUrl: './chat-window.component.css',
 })

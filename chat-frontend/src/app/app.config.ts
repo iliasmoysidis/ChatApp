@@ -21,19 +21,19 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { SocketIoModule, SocketIoConfig, provideSocketIo } from 'ngx-socket-io';
 
-const config: SocketIoConfig = {
+const socketConfig: SocketIoConfig = {
   url: environment.socket.url,
   options: { autoConnect: false },
 };
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideSocketIo(config),
     provideKeycloakAngular(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideHttpClient(withInterceptors([includeBearerTokenInterceptor])),
     importProvidersFrom(
+      SocketIoModule.forRoot(socketConfig),
       NbThemeModule.forRoot({ name: 'default' }),
       NbIconModule,
       NbEvaIconsModule,

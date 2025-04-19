@@ -42,5 +42,19 @@ services:
         env_file:
             - .env
 
+    websocket-server:
+        container_name: websocket
+        restart: always
+        build:
+            context: ./websocket
+            dockerfile: Dockerfile
+        ports:
+            - "3000:${PORT}"
+        volumes:
+            - ./websocket:/usr/src/app
+            - /usr/src/app/node_modules
+        env_file:
+            - .env
+
 volumes:
     postgres_data:

@@ -1,13 +1,16 @@
 import {
+  keycloak_default
+} from "./chunk-SCG2SCAX.js";
+import {
   HTTP_INTERCEPTORS,
   HttpHeaders
-} from "./chunk-43QUOGAV.js";
+} from "./chunk-5H2EACXL.js";
 import {
   CommonModule
-} from "./chunk-U3GYTR5A.js";
+} from "./chunk-BML5GKM4.js";
 import {
   isPlatformBrowser
-} from "./chunk-2QTRYKMC.js";
+} from "./chunk-UMW2L2D2.js";
 import {
   Directive,
   EnvironmentInjector,
@@ -33,7 +36,7 @@ import {
   ɵɵdefineNgModule,
   ɵɵdirectiveInject,
   ɵɵinject
-} from "./chunk-NJ7GBVXC.js";
+} from "./chunk-ZEAAU7MK.js";
 import {
   Subject,
   combineLatest,
@@ -46,13 +49,10 @@ import {
   takeUntil
 } from "./chunk-P6U2JBMQ.js";
 import {
-  keycloak_default
-} from "./chunk-3IJRCXPE.js";
-import {
   __async,
   __spreadProps,
   __spreadValues
-} from "./chunk-TXDUYLVM.js";
+} from "./chunk-4MWRP73S.js";
 
 // node_modules/keycloak-angular/fesm2022/keycloak-angular.mjs
 var KeycloakEventTypeLegacy;

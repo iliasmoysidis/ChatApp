@@ -2,7 +2,7 @@ import {
   __async,
   __spreadProps,
   __spreadValues
-} from "./chunk-TXDUYLVM.js";
+} from "./chunk-4MWRP73S.js";
 
 // node_modules/keycloak-js/lib/keycloak.js
 function Keycloak(config) {
@@ -1520,4 +1520,4 @@ function isObject(input) {
 export {
   keycloak_default
 };
-//# sourceMappingURL=chunk-3IJRCXPE.js.map
+//# sourceMappingURL=chunk-SCG2SCAX.js.map
