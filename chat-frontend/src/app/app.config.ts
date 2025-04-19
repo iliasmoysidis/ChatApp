@@ -1,3 +1,4 @@
+import { environment } from '../environments/environment';
 import {
   ApplicationConfig,
   importProvidersFrom,
@@ -18,9 +19,16 @@ import {
 } from '@nebular/theme';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
+import { SocketIoModule, SocketIoConfig, provideSocketIo } from 'ngx-socket-io';
+
+const config: SocketIoConfig = {
+  url: environment.socket.url,
+  options: { autoConnect: false },
+};
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideSocketIo(config),
     provideKeycloakAngular(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),

@@ -1,3 +1,4 @@
+import { environment } from '../environments/environment';
 import {
   provideKeycloak,
   createInterceptorCondition,
@@ -8,17 +9,17 @@ import {
   UserActivityService,
 } from 'keycloak-angular';
 
-const localhostCondition =
+const websocketCondition =
   createInterceptorCondition<IncludeBearerTokenCondition>({
-    urlPattern: /^(http:\/\/localhost:8181)(\/.*)?$/i,
+    urlPattern: /^(http:\/\/localhost:3000)(\/.*)?$/i,
   });
 
 export const provideKeycloakAngular = () =>
   provideKeycloak({
     config: {
-      realm: 'chat-realm',
-      url: 'http://localhost:8080',
-      clientId: 'chat-app',
+      realm: environment.keycloak.realm,
+      url: environment.keycloak.url,
+      clientId: environment.keycloak.clientId,
     },
     initOptions: {
       onLoad: 'check-sso',
@@ -36,7 +37,7 @@ export const provideKeycloakAngular = () =>
       UserActivityService,
       {
         provide: INCLUDE_BEARER_TOKEN_INTERCEPTOR_CONFIG,
-        useValue: [localhostCondition],
+        useValue: [websocketCondition],
       },
     ],
   });
