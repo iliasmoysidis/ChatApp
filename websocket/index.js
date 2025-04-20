@@ -14,7 +14,7 @@ const io = socketIO(server, {
 	},
 });
 
-// io.use(verifyToken);
+io.use(verifyToken);
 io.on("connect", (socket) => {
 	console.log(`User ${socket.id} has connected`);
 	socket.on("disconnect", () => {

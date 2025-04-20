@@ -32,7 +32,7 @@ function handleJwtCallback(resolve, reject) {
 function verifyJwt(token, publicKey) {
 	const options = {
 		algorithms: [ENCRYPTION_ALGORITHM],
-		issuer: `${KEYCLOAK_DOMAIN}/realms/${REALM_NAME}`,
+		issuer: `http://localhost:8080/realms/${REALM_NAME}`,
 		audience: undefined,
 	};
 

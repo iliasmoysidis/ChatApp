@@ -15,7 +15,7 @@ export class AuthService {
   private readonly _isAuthenticated = signal(false);
   public readonly isAuthenticated = this._isAuthenticated.asReadonly();
 
-  constructor(private readonly socket: Socket) {
+  constructor(private readonly socket: Socket, private keycloak: Keycloak) {
     const keycloakSignal = inject(KEYCLOAK_EVENT_SIGNAL);
 
     effect(() => {
@@ -26,6 +26,7 @@ export class AuthService {
         this._isAuthenticated.set(isAuth);
 
         if (isAuth) {
+          this.socket.ioSocket.auth = { token: this.keycloak.token };
           this.socket.connect();
         }
       }
