@@ -1,14 +1,14 @@
 version: "3.6"
 
 services:
-    keycloak_web:
+    keycloak-server:
         image: quay.io/keycloak/keycloak:latest
-        container_name: keycloak-server
+        container_name: keycloak
         volumes:
             - ./keycloak/realms:/opt/keycloak/data/import
         environment:
             KC_DB: postgres
-            KC_DB_URL: jdbc:postgresql://keycloakdb:5432/keycloak
+            KC_DB_URL: jdbc:postgresql://postgres-server:5432/keycloak
             KC_DB_USERNAME: ${POSTGRES_USERNAME}
             KC_DB_PASSWORD: ${POSTGRES_PASSWORD}
 
@@ -24,14 +24,14 @@ services:
             KEYCLOAK_ADMIN_PASSWORD: ${ADMIN_PASSWORD}
         command: start-dev  --import-realm
         depends_on:
-            - keycloakdb
+            - postgres-server
         ports:
             - 8080:8080
         env_file:
             - .env
 
-    keycloakdb:
-        container_name: postgres-server
+    postgres-server:
+        container_name: ${POSTGRES_HOST}
         image: postgres:15
         volumes:
             - postgres_data:/var/lib/postgresql/data
@@ -39,6 +39,8 @@ services:
             POSTGRES_DB: keycloak
             POSTGRES_USER: ${POSTGRES_USERNAME}
             POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+        ports:
+            - "5432:${POSTGRES_PORT}"
         env_file:
             - .env
 
@@ -52,9 +54,23 @@ services:
             - "3000:${PORT}"
         volumes:
             - ./websocket:/usr/src/app
-            - /usr/src/app/node_modules
         depends_on:
-            - keycloak_web
+            - keycloak-server
+        env_file:
+            - .env
+
+    backend-server:
+        container_name: backend
+        restart: always
+        build:
+            context: ./backend
+            dockerfile: Dockerfile
+        ports:
+            - "4000:${BACKEND_PORT}"
+        volumes:
+            - ./backend:/usr/src/app
+        depends_on:
+            - keycloak-server
         env_file:
             - .env
 
