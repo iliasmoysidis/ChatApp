@@ -5,4 +5,5 @@ export const environment = {
     realm: 'chat-realm',
     clientId: 'chat-app',
   },
+  backend: { url: 'http://localhost:4000' },
 };

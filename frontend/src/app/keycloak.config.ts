@@ -14,6 +14,11 @@ const websocketCondition =
     urlPattern: /^(http:\/\/localhost:3000)(\/.*)?$/i,
   });
 
+const backendCondition =
+  createInterceptorCondition<IncludeBearerTokenCondition>({
+    urlPattern: /^(http:\/\/localhost:4000)(\/.*)?$/i,
+  });
+
 export const provideKeycloakAngular = () =>
   provideKeycloak({
     config: {
@@ -37,7 +42,7 @@ export const provideKeycloakAngular = () =>
       UserActivityService,
       {
         provide: INCLUDE_BEARER_TOKEN_INTERCEPTOR_CONFIG,
-        useValue: [websocketCondition],
+        useValue: [websocketCondition, backendCondition],
       },
     ],
   });

@@ -11,6 +11,7 @@ import {
 import { ChatService } from '../../services/chat/chat.service';
 import { User } from '../../interfaces/user.interface';
 import { Observable, of } from 'rxjs';
+import { ApiService } from '../../services/api/api.service';
 
 @Component({
   selector: 'app-available-chats',
@@ -39,7 +40,10 @@ export class AvailableChatsComponent {
   filteredOptions$: Observable<string[]> = of([]);
   @ViewChild('autoInput') input!: ElementRef<HTMLInputElement>;
 
-  constructor(private chatService: ChatService) {}
+  constructor(
+    private readonly chatService: ChatService,
+    private readonly apiService: ApiService
+  ) {}
 
   onClick(user: User) {
     this.chatService.updateUser(user);
@@ -54,7 +58,18 @@ export class AvailableChatsComponent {
     this.newChat = false;
   }
 
-  onChange() {}
+  onChange() {
+    const inputValue = this.input.nativeElement.value;
+    this.apiService.filterUsers(inputValue).subscribe({
+      next: (response) => {
+        console.log('Filtered users:', response);
+        // Do something with response, like update UI
+      },
+      error: (err) => {
+        console.error('Error fetching users:', err);
+      },
+    });
+  }
 
   onSelectionChange($event: any) {}
 }

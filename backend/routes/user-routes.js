@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const { Op, fn, col } = require("sequelize");
+const { Op } = require("sequelize");
 const verifyToken = require("../middleware/api-auth");
-const user_entity = require("../models/user_entity");
+const { user_entity } = require("../models/index");
 
 function createFilterCondition(searchString, fields) {
 	return fields.map((field) => ({
