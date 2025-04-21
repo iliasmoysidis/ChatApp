@@ -1,4 +1,5 @@
 const { Sequelize } = require("sequelize");
+const initModels = require("./init-models");
 
 const sequelize = new Sequelize(
 	process.env.POSTGRES_DATABASE,
@@ -11,11 +12,9 @@ const sequelize = new Sequelize(
 	}
 );
 
-const user_entity = require("../models/user_entity")(
-	sequelize,
-	Sequelize.DataTypes
-);
+const models = initModels(sequelize);
 
 module.exports = {
-	user_entity,
+	models,
+	sequelize,
 };

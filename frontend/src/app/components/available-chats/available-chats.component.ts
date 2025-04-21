@@ -60,15 +60,16 @@ export class AvailableChatsComponent {
 
   onChange() {
     const inputValue = this.input.nativeElement.value;
-    this.apiService.filterUsers(inputValue).subscribe({
-      next: (response) => {
-        console.log('Filtered users:', response);
-        // Do something with response, like update UI
-      },
-      error: (err) => {
-        console.error('Error fetching users:', err);
-      },
-    });
+    if (inputValue.length !== 0) {
+      this.apiService.filterUsers(inputValue).subscribe({
+        next: (response) => {
+          console.log('Filtered users:', response);
+        },
+        error: (err) => {
+          console.error('Error fetching users:', err);
+        },
+      });
+    }
   }
 
   onSelectionChange($event: any) {}
