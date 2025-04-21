@@ -1,0 +1,49 @@
+<nb-card>
+  <nb-card-header
+    ><div class="header">
+      To:
+      <input
+        class="search-bar"
+        #autoInput
+        nbInput
+        type="text"
+        (input)="onChange()"
+        placeholder="Enter username, name or email..."
+        [nbAutocomplete]="auto"
+      />
+
+      <nb-autocomplete #auto (selectedChange)="onSelectionChange($event)">
+        <nb-option *ngFor="let user of filteredUsers$ | async" [value]="user">
+          <nb-user [name]="user.name" [title]="user.username"></nb-user>
+        </nb-option>
+      </nb-autocomplete>
+    </div>
+  </nb-card-header>
+
+  <nb-card-body *ngIf="chatMembers.length > 0">
+    <nb-list>
+      <nb-list-item
+        class="chat-item"
+        *ngFor="let chatMember of chatMembers; let i = index"
+      >
+        <nb-user [name]="chatMember.name" [title]="chatMember.username">
+        </nb-user>
+        <nb-icon
+          class="close-new-chat-icon"
+          icon="close-outline"
+          title="Close"
+          (click)="removeChatMember(i)"
+        ></nb-icon>
+      </nb-list-item>
+    </nb-list>
+  </nb-card-body>
+
+  <nb-card-footer *ngIf="chatMembers.length > 0"
+    ><div class="chat-actions">
+      <button nbButton status="primary">Create</button>
+      <button nbButton status="success" (click)="clearChatMembers()">
+        Clear
+      </button>
+    </div></nb-card-footer
+  >
+</nb-card>

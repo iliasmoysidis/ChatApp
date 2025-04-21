@@ -1,4 +1,4 @@
-<nb-card *ngIf="!newChat">
+<nb-card>
   <nb-card-header>
     <div class="header">
       <span class="header-title">Chat</span>
@@ -12,7 +12,6 @@
           class="new-chat-icon"
           icon="plus-square-outline"
           title="New Chat"
-          (click)="createNewChat()"
         ></nb-icon>
       </div>
     </div>
@@ -24,39 +23,9 @@
       *ngFor="let user of users"
       (click)="onClick(user)"
     >
-      <nb-user [name]="user.name" [title]="user.title"> </nb-user>
+      <nb-user [name]="user.name" [title]="user.username"> </nb-user>
     </nb-list-item>
   </nb-list>
 </nb-card>
 
-<nb-card *ngIf="newChat">
-  <nb-card-header
-    ><div class="header">
-      To:
-      <input
-        style="width: 100%"
-        #autoInput
-        nbInput
-        type="text"
-        (input)="onChange()"
-        placeholder="Enter username, name or email..."
-        [nbAutocomplete]="auto"
-      />
-      <nb-icon
-        class="close-new-chat-icon"
-        icon="close-square-outline"
-        title="Close"
-        (click)="closeNewChat()"
-      ></nb-icon>
-    </div>
-
-    <nb-autocomplete #auto (selectedChange)="onSelectionChange($event)">
-      <nb-option
-        *ngFor="let option of filteredOptions$ | async"
-        [value]="option"
-      >
-        {{ option }}
-      </nb-option>
-    </nb-autocomplete>
-  </nb-card-header>
-</nb-card>
+<app-new-chat></app-new-chat>

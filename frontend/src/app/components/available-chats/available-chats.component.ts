@@ -12,6 +12,7 @@ import { ChatService } from '../../services/chat/chat.service';
 import { User } from '../../interfaces/user.interface';
 import { Observable, of } from 'rxjs';
 import { ApiService } from '../../services/api/api.service';
+import { NewChatComponent } from '../new-chat/new-chat.component';
 
 @Component({
   selector: 'app-available-chats',
@@ -23,6 +24,7 @@ import { ApiService } from '../../services/api/api.service';
     CommonModule,
     NbInputModule,
     NbAutocompleteModule,
+    NewChatComponent,
   ],
   templateUrl: './available-chats.component.html',
   styleUrl: './available-chats.component.css',
@@ -30,14 +32,28 @@ import { ApiService } from '../../services/api/api.service';
 export class AvailableChatsComponent {
   selectedUser: User | null = null;
   users: User[] = [
-    { name: 'Carla Espinosa', title: 'Nurse' },
-    { name: 'Bob Kelso', title: 'Doctor of Medicine' },
-    { name: 'Janitor', title: 'Janitor' },
-    { name: 'Perry Cox', title: 'Doctor of Medicine' },
-    { name: 'Ben Sullivan', title: 'Carpenter and photographer' },
+    {
+      id: '1',
+      name: 'Carla Espinosa',
+      username: 'dorothy123',
+      email: 'asdf@gmail.com',
+    },
+    { id: '1', name: 'Bob Kelso', username: 'lex5', email: 'asdf@gmail.com' },
+    {
+      id: '1',
+      name: 'Janitor',
+      username: 'xx_cool_kid_xx',
+      email: 'asdf@gmail.com',
+    },
+    { id: '1', name: 'Perry Cox', username: '1337', email: 'asdf@gmail.com' },
+    {
+      id: '1',
+      name: 'Ben Sullivan',
+      username: 'lil_moy',
+      email: 'asdf@gmail.com',
+    },
   ];
-  newChat: boolean = false;
-  filteredOptions$: Observable<string[]> = of([]);
+  filteredUsers$: Observable<User[]> = of([]);
   @ViewChild('autoInput') input!: ElementRef<HTMLInputElement>;
 
   constructor(
@@ -45,17 +61,11 @@ export class AvailableChatsComponent {
     private readonly apiService: ApiService
   ) {}
 
+  ngOnInit() {}
+
   onClick(user: User) {
     this.chatService.updateUser(user);
     this.selectedUser = user;
-  }
-
-  createNewChat() {
-    this.newChat = true;
-  }
-
-  closeNewChat() {
-    this.newChat = false;
   }
 
   onChange() {
@@ -63,14 +73,18 @@ export class AvailableChatsComponent {
     if (inputValue.length !== 0) {
       this.apiService.filterUsers(inputValue).subscribe({
         next: (response) => {
-          console.log('Filtered users:', response);
+          this.filteredUsers$ = of(response.users);
         },
         error: (err) => {
           console.error('Error fetching users:', err);
         },
       });
+    } else {
+      this.filteredUsers$ = of([]);
     }
   }
 
-  onSelectionChange($event: any) {}
+  onSelectionChange($event: any) {
+    console.log($event);
+  }
 }

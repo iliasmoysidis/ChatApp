@@ -2,7 +2,8 @@ const express = require("express");
 const router = express.Router();
 const { Op } = require("sequelize");
 const verifyToken = require("../middleware/api-auth");
-const { models } = require("../models/index");
+const { models } = require("../database/initialize-models");
+const { sequelize } = require("../database/sequelize-connection");
 
 function createFilterCondition(searchString, fields) {
 	return fields.map((field) => ({
@@ -23,7 +24,15 @@ router.get("/filterUsers", verifyToken, async (req, res) => {
 		const searchQuery = {
 			[Op.or]: createFilterCondition(searchString, fieldsToSearch),
 		};
-		const users = await models.user_entity.findAll({ where: searchQuery });
+		const users = await models.user_entity.findAll({
+			where: searchQuery,
+			attributes: [
+				"id",
+				"email",
+				"username",
+				[sequelize.literal(`first_name || ' ' || last_name`), "name"],
+			],
+		});
 		res.status(200).json({ users: users });
 	} catch (error) {
 		console.log("Error fetching users:", error);

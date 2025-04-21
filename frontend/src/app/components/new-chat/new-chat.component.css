@@ -1,0 +1,40 @@
+.close-new-chat-icon {
+  font-size: 27px;
+  cursor: pointer;
+  transition: font-weight 0.2s, transform 0.2s;
+}
+
+.close-new-chat-icon:hover {
+  font-weight: bold;
+  transform: scale(1.1);
+}
+
+.search-bar {
+  width: 100%;
+}
+
+.header,
+.chat-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chat-item {
+  border-bottom: 0px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chat-item:hover {
+  background-color: #f0f4f8;
+}
+
+.chat-item.highlighted {
+  background-color: #f0f8ff;
+  color: #007bff;
+  font-weight: bold;
+}
