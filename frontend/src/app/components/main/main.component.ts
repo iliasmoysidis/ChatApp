@@ -9,10 +9,11 @@ import {
   NbCardModule,
 } from '@nebular/theme';
 import { CommonModule } from '@angular/common';
-import { ChatWindowComponent } from '../chat-window/chat-window.component';
+import { DialogComponent } from '../dialog/dialog.component';
 import { HeaderComponent } from '../header/header.component';
 import { AuthService } from '../../services/auth/auth.service';
-import { AvailableChatsComponent } from '../available-chats/available-chats.component';
+import { ChatsComponent } from '../chats/chats.component';
+import { NewChatComponent } from '../new-chat/new-chat.component';
 
 @Component({
   selector: 'app-main',
@@ -23,11 +24,12 @@ import { AvailableChatsComponent } from '../available-chats/available-chats.comp
     NbThemeModule,
     CommonModule,
     NbChatModule,
-    ChatWindowComponent,
+    DialogComponent,
     HeaderComponent,
     NbTabsetModule,
     NbCardModule,
-    AvailableChatsComponent,
+    ChatsComponent,
+    NewChatComponent,
   ],
   templateUrl: './main.component.html',
   styleUrl: './main.component.css',

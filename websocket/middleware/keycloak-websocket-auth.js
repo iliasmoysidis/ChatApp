@@ -79,4 +79,4 @@ async function verifyToken(socket, next) {
 	}
 }
 
-module.exports = verifyToken;
+module.exports = { verifyToken };

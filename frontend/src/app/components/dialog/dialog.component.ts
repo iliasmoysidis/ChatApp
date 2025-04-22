@@ -5,12 +5,12 @@ import { User } from '../../interfaces/user.interface';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-chat-window',
+  selector: 'app-dialog',
   imports: [NbChatModule, NbCardModule, CommonModule],
-  templateUrl: './chat-window.component.html',
-  styleUrl: './chat-window.component.css',
+  templateUrl: './dialog.component.html',
+  styleUrl: './dialog.component.css',
 })
-export class ChatWindowComponent {
+export class DialogComponent {
   messages: any[] = [];
   user: User | null = null;
 

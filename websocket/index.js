@@ -4,6 +4,7 @@ const express = require("express");
 const http = require("http");
 const socketIO = require("socket.io");
 const verifyToken = require("./middleware/keycloak-websocket-auth");
+const { setupSocket } = require("./socket/socket-setup");
 
 const app = express();
 app.use(express.json());
@@ -14,13 +15,7 @@ const io = socketIO(server, {
 	},
 });
 
-io.use(verifyToken);
-io.on("connect", (socket) => {
-	console.log(`User ${socket.id} has connected`);
-	socket.on("disconnect", () => {
-		console.log(`User ${socket.id} has disconnected`);
-	});
-});
+setupSocket(io);
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, async () => {

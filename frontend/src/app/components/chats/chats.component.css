@@ -1,11 +1,11 @@
-.header-title {
-  font-size: 20px;
-}
-
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.header-title {
+  font-size: 20px;
 }
 
 .chat-item {
@@ -24,25 +24,17 @@
   font-weight: bold;
 }
 
-.new-chat-icon,
-.filter-icon,
-.close-new-chat-icon {
+.filter-icon {
   font-size: 27px;
   cursor: pointer;
   transition: font-weight 0.2s, transform 0.2s;
 }
 
-.filter-icon:hover,
-.new-chat-icon:hover,
-.close-new-chat-icon:hover {
+.filter-icon:hover {
   font-weight: bold;
   transform: scale(1.1);
 }
 
 .filter-icon {
   margin-right: 3px;
-}
-
-.spacer {
-  flex-grow: 1;
 }

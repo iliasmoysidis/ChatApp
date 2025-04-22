@@ -4,10 +4,11 @@
   </nb-layout-header>
 
   <nb-layout-column *ngIf="isAuthenticated" style="flex: 2"
-    ><app-chat-window></app-chat-window>
+    ><app-dialog></app-dialog>
   </nb-layout-column>
 
   <nb-layout-column *ngIf="isAuthenticated" style="flex: 1">
-    <app-available-chats></app-available-chats>
+    <app-chats></app-chats>
+    <app-new-chat></app-new-chat>
   </nb-layout-column>
 </nb-layout>
