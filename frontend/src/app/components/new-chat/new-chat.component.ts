@@ -72,4 +72,9 @@ export class NewChatComponent {
   removeChatMember(i: any) {
     this.chatMembers.splice(i, 1);
   }
+
+  createChat() {
+    if (this.chatMembers.length > 0) {
+    }
+  }
 }

@@ -40,7 +40,7 @@
 
   <nb-card-footer *ngIf="chatMembers.length > 0"
     ><div class="chat-actions">
-      <button nbButton status="primary">Create</button>
+      <button nbButton status="primary" (click)="createChat()">Create</button>
       <button nbButton status="success" (click)="clearChatMembers()">
         Clear
       </button>

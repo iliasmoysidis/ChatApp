@@ -16,5 +16,5 @@ COPY . .
 EXPOSE 4000
 
 # Command to run the application using nodemon
-# CMD ["npm", "run", "dev"]
-CMD ["sh", "-c", "node database/generate-models.js && npm run dev"]
+CMD ["npm", "run", "dev"]
+# CMD ["sh", "-c", "node database/generate-models.js && npm run dev"]
