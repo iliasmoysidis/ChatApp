@@ -2,8 +2,8 @@ const express = require("express");
 const router = express.Router();
 const { Op } = require("sequelize");
 const verifyToken = require("../middleware/api-auth");
-const { models } = require("../database/initialize-models");
-const { sequelize } = require("../database/sequelize-connection");
+const { models } = require("../database/keycloak/models/init-models");
+const { sequelize } = require("../database/keycloak/config/sequelize.config");
 
 function createFilterCondition(searchString, fields) {
 	return fields.map((field) => ({

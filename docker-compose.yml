@@ -8,7 +8,7 @@ services:
             - ./keycloak/realms:/opt/keycloak/data/import
         environment:
             KC_DB: postgres
-            KC_DB_URL: jdbc:postgresql://postgres-server:5432/keycloak
+            KC_DB_URL: jdbc:postgresql://keycloak-db:5432/keycloak
             KC_DB_USERNAME: ${POSTGRES_USERNAME}
             KC_DB_PASSWORD: ${POSTGRES_PASSWORD}
 
@@ -20,25 +20,39 @@ services:
             KC_LOG_LEVEL: info
             KC_METRICS_ENABLED: true
             KC_HEALTH_ENABLED: true
-            KEYCLOAK_ADMIN: ${ADMIN_USERNAME}
-            KEYCLOAK_ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+            KC_BOOTSTRAP_ADMIN_USERNAME: ${ADMIN_USERNAME}
+            KC_BOOTSTRAP_ADMIN_PASSWORD: ${ADMIN_PASSWORD}
         command: start-dev  --import-realm
         depends_on:
-            - postgres-server
+            - keycloak-db
         ports:
             - 8080:8080
         env_file:
             - .env
 
-    postgres-server:
+    keycloak-db:
         container_name: ${POSTGRES_HOST}
         image: postgres:15
         volumes:
-            - postgres_data:/var/lib/postgresql/data
+            - keycloak_data:/var/lib/postgresql/data
         environment:
             POSTGRES_DB: keycloak
             POSTGRES_USER: ${POSTGRES_USERNAME}
             POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+        healthcheck:
+            test:
+                [
+                    "CMD",
+                    "pg_isready",
+                    "-U",
+                    "${POSTGRES_USERNAME}",
+                    "-d",
+                    "keycloak",
+                ]
+            interval: 10s
+            retries: 5
+            start_period: 10s
+            timeout: 5s
         ports:
             - "5432:${POSTGRES_PORT}"
         env_file:
@@ -70,9 +84,24 @@ services:
         volumes:
             - ./backend:/usr/src/app
         depends_on:
-            - keycloak-server
+            keycloak-db:
+                condition: service_healthy
         env_file:
             - .env
 
+    # chat-db:
+    #     container_name: db
+    #     image: postgres:15
+    #     volumes:
+    #         - chat_data:/var/lib/postgresql/data
+    #     environment:
+    #         POSTGRES_DB: keycloak
+    #         POSTGRES_USER: ${POSTGRES_USERNAME}
+    #         POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    #     ports:
+    #         - "5432:${POSTGRES_PORT}"
+    #     env_file:
+    #         - .env
+
 volumes:
-    postgres_data:
+    keycloak_data:
