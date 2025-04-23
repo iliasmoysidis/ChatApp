@@ -65,15 +65,6 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: false
-    },
-    organization_id: {
-      type: DataTypes.STRING(255),
-      allowNull: true
-    },
-    hide_on_login: {
-      type: DataTypes.BOOLEAN,
-      allowNull: true,
-      defaultValue: false
     }
   }, {
     sequelize,
@@ -92,23 +83,6 @@ module.exports = function(sequelize, DataTypes) {
         name: "idx_ident_prov_realm",
         fields: [
           { name: "realm_id" },
-        ]
-      },
-      {
-        name: "idx_idp_for_login",
-        fields: [
-          { name: "realm_id" },
-          { name: "enabled" },
-          { name: "link_only" },
-          { name: "hide_on_login" },
-          { name: "organization_id" },
-        ]
-      },
-      {
-        name: "idx_idp_realm_org",
-        fields: [
-          { name: "realm_id" },
-          { name: "organization_id" },
         ]
       },
       {

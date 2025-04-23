@@ -22,18 +22,6 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       defaultValue: "sybase-needs-something-here",
       primaryKey: true
-    },
-    long_value_hash: {
-      type: DataTypes.BLOB,
-      allowNull: true
-    },
-    long_value_hash_lower_case: {
-      type: DataTypes.BLOB,
-      allowNull: true
-    },
-    long_value: {
-      type: DataTypes.TEXT,
-      allowNull: true
     }
   }, {
     sequelize,
@@ -59,20 +47,6 @@ module.exports = function(sequelize, DataTypes) {
         fields: [
           { name: "name" },
           { name: "value" },
-        ]
-      },
-      {
-        name: "user_attr_long_values",
-        fields: [
-          { name: "long_value_hash" },
-          { name: "name" },
-        ]
-      },
-      {
-        name: "user_attr_long_values_lower_case",
-        fields: [
-          { name: "long_value_hash_lower_case" },
-          { name: "name" },
         ]
       },
     ]

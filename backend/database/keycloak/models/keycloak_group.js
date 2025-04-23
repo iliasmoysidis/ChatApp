@@ -20,11 +20,6 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(36),
       allowNull: true,
       unique: "sibling_names"
-    },
-    type: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      defaultValue: 0
     }
   }, {
     sequelize,

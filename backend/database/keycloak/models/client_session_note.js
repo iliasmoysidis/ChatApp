@@ -1,38 +1,36 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('user_group_membership', {
-    group_id: {
-      type: DataTypes.STRING(36),
+  return sequelize.define('client_session_note', {
+    name: {
+      type: DataTypes.STRING(255),
       allowNull: false,
       primaryKey: true
     },
-    user_id: {
+    value: {
+      type: DataTypes.STRING(255),
+      allowNull: true
+    },
+    client_session: {
       type: DataTypes.STRING(36),
       allowNull: false,
       primaryKey: true,
       references: {
-        model: 'user_entity',
+        model: 'client_session',
         key: 'id'
       }
     }
   }, {
     sequelize,
-    tableName: 'user_group_membership',
+    tableName: 'client_session_note',
     schema: 'public',
     timestamps: false,
     indexes: [
       {
-        name: "constraint_user_group",
+        name: "constraint_5e",
         unique: true,
         fields: [
-          { name: "group_id" },
-          { name: "user_id" },
-        ]
-      },
-      {
-        name: "idx_user_group_mapping",
-        fields: [
-          { name: "user_id" },
+          { name: "client_session" },
+          { name: "name" },
         ]
       },
     ]

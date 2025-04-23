@@ -35,11 +35,6 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       defaultValue: "local",
       primaryKey: true
-    },
-    version: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      defaultValue: 0
     }
   }, {
     sequelize,
@@ -56,6 +51,19 @@ module.exports = function(sequelize, DataTypes) {
           { name: "client_storage_provider" },
           { name: "external_client_id" },
           { name: "offline_flag" },
+        ]
+      },
+      {
+        name: "idx_offline_css_preload",
+        fields: [
+          { name: "client_id" },
+          { name: "offline_flag" },
+        ]
+      },
+      {
+        name: "idx_us_sess_id_on_cl_sess",
+        fields: [
+          { name: "user_session_id" },
         ]
       },
     ]

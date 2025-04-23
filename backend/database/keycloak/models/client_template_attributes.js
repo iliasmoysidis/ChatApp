@@ -1,17 +1,17 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('client_attributes', {
-    client_id: {
+  return sequelize.define('client_template_attributes', {
+    template_id: {
       type: DataTypes.STRING(36),
       allowNull: false,
       primaryKey: true,
       references: {
-        model: 'client',
+        model: 'client_template',
         key: 'id'
       }
     },
     value: {
-      type: DataTypes.STRING(4000),
+      type: DataTypes.STRING(2048),
       allowNull: true
     },
     name: {
@@ -21,18 +21,8 @@ module.exports = function(sequelize, DataTypes) {
     }
   }, {
     sequelize,
-    tableName: 'client_attributes',
+    tableName: 'client_template_attributes',
     schema: 'public',
-    timestamps: false,
-    indexes: [
-      {
-        name: "constraint_3c",
-        unique: true,
-        fields: [
-          { name: "client_id" },
-          { name: "name" },
-        ]
-      },
-    ]
+    timestamps: false
   });
 };

@@ -1,16 +1,16 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('component_config', {
+  return sequelize.define('credential_attribute', {
     id: {
       type: DataTypes.STRING(36),
       allowNull: false,
       primaryKey: true
     },
-    component_id: {
+    credential_id: {
       type: DataTypes.STRING(36),
       allowNull: false,
       references: {
-        model: 'component',
+        model: 'credential',
         key: 'id'
       }
     },
@@ -24,21 +24,21 @@ module.exports = function(sequelize, DataTypes) {
     }
   }, {
     sequelize,
-    tableName: 'component_config',
+    tableName: 'credential_attribute',
     schema: 'public',
     timestamps: false,
     indexes: [
       {
-        name: "constr_component_config_pk",
+        name: "constraint_credential_attr",
         unique: true,
         fields: [
           { name: "id" },
         ]
       },
       {
-        name: "idx_compo_config_compo",
+        name: "idx_credential_attr_cred",
         fields: [
-          { name: "component_id" },
+          { name: "credential_id" },
         ]
       },
     ]

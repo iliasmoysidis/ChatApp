@@ -1,35 +1,35 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('client_attributes', {
-    client_id: {
+  return sequelize.define('user_session_note', {
+    user_session: {
       type: DataTypes.STRING(36),
       allowNull: false,
       primaryKey: true,
       references: {
-        model: 'client',
+        model: 'user_session',
         key: 'id'
       }
-    },
-    value: {
-      type: DataTypes.STRING(4000),
-      allowNull: true
     },
     name: {
       type: DataTypes.STRING(255),
       allowNull: false,
       primaryKey: true
+    },
+    value: {
+      type: DataTypes.STRING(2048),
+      allowNull: true
     }
   }, {
     sequelize,
-    tableName: 'client_attributes',
+    tableName: 'user_session_note',
     schema: 'public',
     timestamps: false,
     indexes: [
       {
-        name: "constraint_3c",
+        name: "constraint_usn_pk",
         unique: true,
         fields: [
-          { name: "client_id" },
+          { name: "user_session" },
           { name: "name" },
         ]
       },
