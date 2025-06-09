@@ -14,6 +14,17 @@ import { Socket } from 'ngx-socket-io';
 export class AuthService {
   private readonly _isAuthenticated = signal(false);
   public readonly isAuthenticated = this._isAuthenticated.asReadonly();
+  private readonly _decodedToken = signal<any>(null);
+  public readonly decodedToken = this._decodedToken.asReadonly();
+
+  private decodeToken(token: string): any {
+    try {
+      const payload = token.split('.')[1];
+      return JSON.parse(atob(payload));
+    } catch {
+      return null;
+    }
+  }
 
   constructor(private readonly socket: Socket, private keycloak: Keycloak) {
     const keycloakSignal = inject(KEYCLOAK_EVENT_SIGNAL);
@@ -26,13 +37,17 @@ export class AuthService {
         this._isAuthenticated.set(isAuth);
 
         if (isAuth) {
+          this._decodedToken.set(this.decodeToken(this.keycloak.token!));
           this.socket.ioSocket.auth = { token: this.keycloak.token };
           this.socket.connect();
+        } else {
+          this._decodedToken.set(null);
         }
       }
 
       if (keycloakEvent.type === KeycloakEventType.AuthLogout) {
         this._isAuthenticated.set(false);
+        this._decodedToken.set(null);
         this.socket.disconnect();
       }
     });

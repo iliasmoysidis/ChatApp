@@ -19,22 +19,6 @@ module.exports = function(sequelize, DataTypes) {
     sequelize,
     tableName: 'user_consent_role',
     schema: 'public',
-    timestamps: false,
-    indexes: [
-      {
-        name: "constraint_grntcsnt_role_pm",
-        unique: true,
-        fields: [
-          { name: "user_consent_id" },
-          { name: "role_id" },
-        ]
-      },
-      {
-        name: "idx_consent_role",
-        fields: [
-          { name: "user_consent_id" },
-        ]
-      },
-    ]
+    timestamps: false
   });
 };

@@ -12,6 +12,7 @@ import {
 import { Observable, of } from 'rxjs';
 import { User } from '../../interfaces/user.interface';
 import { ApiService } from '../../services/api/api.service';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-new-chat',
@@ -34,7 +35,10 @@ export class NewChatComponent {
   chatMembers: User[] = [];
   @ViewChild('autoInput') input!: ElementRef<HTMLInputElement>;
 
-  constructor(private readonly apiService: ApiService) {}
+  constructor(
+    private readonly apiService: ApiService,
+    private readonly authService: AuthService
+  ) {}
 
   onClick(user: User) {
     this.selectedUser = user;
@@ -75,6 +79,17 @@ export class NewChatComponent {
 
   createChat() {
     if (this.chatMembers.length > 0) {
+      const participantEmails = this.chatMembers.map((member) => member.email);
+      participantEmails.push(this.authService.decodedToken().email);
+      const uniqueEmails = [...new Set(participantEmails)];
+      this.apiService.createChat(uniqueEmails).subscribe({
+        next: (response) => {
+          console.log('Chat created:', response);
+        },
+        error: (err) => {
+          console.error('Create chat error:', err);
+        },
+      });
     }
   }
 }

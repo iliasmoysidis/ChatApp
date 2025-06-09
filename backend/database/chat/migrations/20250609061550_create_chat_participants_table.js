@@ -1,20 +1,51 @@
-exports.up = function (knex) {
-	return knex.schema.createTable("chat_participants", (table) => {
-		table.increments("id").primary();
-		table.integer("chat_id").unsigned().notNullable();
-		table.uuid("user_id").notNullable().index();
-		table.timestamps(true, true);
+"use strict";
 
-		table
-			.foreign("chat_id")
-			.references("id")
-			.inTable("chats")
-			.onDelete("CASCADE");
+module.exports = {
+	async up(queryInterface, Sequelize) {
+		await queryInterface.createTable("chat_participants", {
+			id: {
+				allowNull: false,
+				autoIncrement: true,
+				primaryKey: true,
+				type: Sequelize.INTEGER,
+			},
+			chat_id: {
+				type: Sequelize.INTEGER,
+				allowNull: false,
+				references: {
+					model: "chats",
+					key: "id",
+				},
+				onDelete: "CASCADE",
+			},
+			user_id: {
+				type: Sequelize.STRING,
+				allowNull: false,
+			},
+			createdAt: {
+				allowNull: false,
+				type: Sequelize.DATE,
+				defaultValue: Sequelize.fn("now"),
+			},
+			updatedAt: {
+				allowNull: false,
+				type: Sequelize.DATE,
+				defaultValue: Sequelize.fn("now"),
+			},
+		});
 
-		table.unique(["chat_id", "user_id"]);
-	});
-};
+		await queryInterface.addConstraint("chat_participants", {
+			fields: ["chat_id", "user_id"],
+			type: "unique",
+			name: "chat_participants_chat_id_user_id_unique",
+		});
 
-exports.down = function (knex) {
-	return knex.schema.dropTable("chat_participants");
+		await queryInterface.addIndex("chat_participants", ["user_id"], {
+			name: "chat_participants_user_id_index",
+		});
+	},
+
+	async down(queryInterface, Sequelize) {
+		await queryInterface.dropTable("chat_participants");
+	},
 };

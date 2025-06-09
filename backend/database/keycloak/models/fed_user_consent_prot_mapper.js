@@ -15,16 +15,6 @@ module.exports = function(sequelize, DataTypes) {
     sequelize,
     tableName: 'fed_user_consent_prot_mapper',
     schema: 'public',
-    timestamps: false,
-    indexes: [
-      {
-        name: "constr_user_consent_protm_pk",
-        unique: true,
-        fields: [
-          { name: "user_consent_id" },
-          { name: "protocol_mapper_id" },
-        ]
-      },
-    ]
+    timestamps: false
   });
 };

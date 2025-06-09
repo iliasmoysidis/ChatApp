@@ -1,10 +1,28 @@
-exports.up = function (knex) {
-	return knex.schema.createTable("chats", (table) => {
-		table.increments("id").primary();
-		table.timestamps(true, true);
-	});
-};
+"use strict";
 
-exports.down = function (knex) {
-	return knex.schema.dropTable("chats");
+module.exports = {
+	async up(queryInterface, Sequelize) {
+		await queryInterface.createTable("chats", {
+			id: {
+				allowNull: false,
+				autoIncrement: true,
+				primaryKey: true,
+				type: Sequelize.INTEGER,
+			},
+			createdAt: {
+				allowNull: false,
+				type: Sequelize.DATE,
+				defaultValue: Sequelize.fn("now"),
+			},
+			updatedAt: {
+				allowNull: false,
+				type: Sequelize.DATE,
+				defaultValue: Sequelize.fn("now"),
+			},
+		});
+	},
+
+	async down(queryInterface, Sequelize) {
+		await queryInterface.dropTable("chats");
+	},
 };

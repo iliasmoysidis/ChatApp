@@ -19,22 +19,6 @@ module.exports = function(sequelize, DataTypes) {
     sequelize,
     tableName: 'user_consent_prot_mapper',
     schema: 'public',
-    timestamps: false,
-    indexes: [
-      {
-        name: "constraint_grntcsnt_prm_pm",
-        unique: true,
-        fields: [
-          { name: "user_consent_id" },
-          { name: "protocol_mapper_id" },
-        ]
-      },
-      {
-        name: "idx_consent_protmapper",
-        fields: [
-          { name: "user_consent_id" },
-        ]
-      },
-    ]
+    timestamps: false
   });
 };

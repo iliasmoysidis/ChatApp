@@ -23,16 +23,6 @@ module.exports = function(sequelize, DataTypes) {
     sequelize,
     tableName: 'client_template_attributes',
     schema: 'public',
-    timestamps: false,
-    indexes: [
-      {
-        name: "pk_cl_tmpl_attr",
-        unique: true,
-        fields: [
-          { name: "template_id" },
-          { name: "name" },
-        ]
-      },
-    ]
+    timestamps: false
   });
 };

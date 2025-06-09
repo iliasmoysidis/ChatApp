@@ -11,8 +11,15 @@ export class ApiService {
 
   filterUsers(value: string): Observable<any> {
     const params = new HttpParams().set('searchString', value);
-    return this.http.get(`${environment.backend.url}/api/filterUsers`, {
+    return this.http.get(`${environment.backend.url}/api/users/filter`, {
       params,
     });
+  }
+
+  createChat(participantIds: string[]): Observable<any> {
+    return this.http.post(
+      `${environment.backend.url}/api/chats/create`,
+      participantIds
+    );
   }
 }

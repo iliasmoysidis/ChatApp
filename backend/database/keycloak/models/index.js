@@ -1,6 +1,6 @@
-const { sequelize } = require("../config/sequelize.config");
+const { keycloakSequelize } = require("../config/sequelize.config");
 const initModels = require("./init-models");
 
-const models = initModels(sequelize);
+const keycloakModels = initModels(keycloakSequelize);
 
-module.exports = { sequelize, models };
+module.exports = { keycloakSequelize, keycloakModels };

@@ -1,7 +1,7 @@
 const { Sequelize } = require("sequelize");
 const SequelizeAuto = require("sequelize-auto");
 
-const sequelize = new Sequelize(
+const keycloakSequelize = new Sequelize(
 	process.env.KEYCLOAK_DB_DATABASE,
 	process.env.KEYCLOAK_DB_USERNAME,
 	process.env.KEYCLOAK_DB_PASSWORD,
@@ -28,6 +28,6 @@ const auto = new SequelizeAuto(
 );
 
 module.exports = {
-	sequelize,
+	keycloakSequelize,
 	auto,
 };
