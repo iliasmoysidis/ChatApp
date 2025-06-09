@@ -12,7 +12,6 @@ import {
 import { Observable, of } from 'rxjs';
 import { User } from '../../interfaces/user.interface';
 import { ApiService } from '../../services/api/api.service';
-import { AuthService } from '../../services/auth/auth.service';
 import { ChatService } from '../../services/chat/chat.service';
 
 @Component({
