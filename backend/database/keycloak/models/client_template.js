@@ -77,6 +77,23 @@ module.exports = function(sequelize, DataTypes) {
     sequelize,
     tableName: 'client_template',
     schema: 'public',
-    timestamps: false
+    timestamps: false,
+    indexes: [
+      {
+        name: "pk_cli_template",
+        unique: true,
+        fields: [
+          { name: "id" },
+        ]
+      },
+      {
+        name: "uk_cli_template",
+        unique: true,
+        fields: [
+          { name: "realm_id" },
+          { name: "name" },
+        ]
+      },
+    ]
   });
 };

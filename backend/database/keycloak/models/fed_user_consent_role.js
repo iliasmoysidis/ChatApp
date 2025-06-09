@@ -15,6 +15,16 @@ module.exports = function(sequelize, DataTypes) {
     sequelize,
     tableName: 'fed_user_consent_role',
     schema: 'public',
-    timestamps: false
+    timestamps: false,
+    indexes: [
+      {
+        name: "constr_user_consent_role_pk",
+        unique: true,
+        fields: [
+          { name: "user_consent_id" },
+          { name: "role_id" },
+        ]
+      },
+    ]
   });
 };

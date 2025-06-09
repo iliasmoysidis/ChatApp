@@ -31,6 +31,15 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 0
+    },
+    broker_session_id: {
+      type: DataTypes.STRING(1024),
+      allowNull: true
+    },
+    version: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: 0
     }
   }, {
     sequelize,
@@ -47,33 +56,26 @@ module.exports = function(sequelize, DataTypes) {
         ]
       },
       {
+        name: "idx_offline_uss_by_broker_session_id",
+        fields: [
+          { name: "broker_session_id" },
+          { name: "realm_id" },
+        ]
+      },
+      {
+        name: "idx_offline_uss_by_last_session_refresh",
+        fields: [
+          { name: "realm_id" },
+          { name: "offline_flag" },
+          { name: "last_session_refresh" },
+        ]
+      },
+      {
         name: "idx_offline_uss_by_user",
         fields: [
           { name: "user_id" },
           { name: "realm_id" },
           { name: "offline_flag" },
-        ]
-      },
-      {
-        name: "idx_offline_uss_by_usersess",
-        fields: [
-          { name: "realm_id" },
-          { name: "offline_flag" },
-          { name: "user_session_id" },
-        ]
-      },
-      {
-        name: "idx_offline_uss_createdon",
-        fields: [
-          { name: "created_on" },
-        ]
-      },
-      {
-        name: "idx_offline_uss_preload",
-        fields: [
-          { name: "offline_flag" },
-          { name: "created_on" },
-          { name: "user_session_id" },
         ]
       },
     ]

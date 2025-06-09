@@ -20,11 +20,11 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     decision_strategy: {
-      type: DataTypes.STRING(20),
+      type: DataTypes.SMALLINT,
       allowNull: true
     },
     logic: {
-      type: DataTypes.STRING(20),
+      type: DataTypes.SMALLINT,
       allowNull: true
     },
     resource_server_id: {

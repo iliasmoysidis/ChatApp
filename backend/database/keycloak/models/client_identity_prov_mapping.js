@@ -4,6 +4,7 @@ module.exports = function(sequelize, DataTypes) {
     client_id: {
       type: DataTypes.STRING(36),
       allowNull: false,
+      primaryKey: true,
       references: {
         model: 'client',
         key: 'id'
@@ -13,6 +14,7 @@ module.exports = function(sequelize, DataTypes) {
     identity_provider_id: {
       type: DataTypes.STRING(36),
       allowNull: false,
+      primaryKey: true,
       references: {
         model: 'identity_provider',
         key: 'internal_id'
@@ -30,6 +32,20 @@ module.exports = function(sequelize, DataTypes) {
     schema: 'public',
     timestamps: false,
     indexes: [
+      {
+        name: "constr_client_iden_prov_map",
+        unique: true,
+        fields: [
+          { name: "client_id" },
+          { name: "identity_provider_id" },
+        ]
+      },
+      {
+        name: "idx_client_id_prov_map_client",
+        fields: [
+          { name: "client_id" },
+        ]
+      },
       {
         name: "uk_7caelwnibji49avxsrtuf6xj12",
         unique: true,

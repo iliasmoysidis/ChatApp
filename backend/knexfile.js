@@ -1,3 +1,4 @@
+require("dotenv").config();
 const path = require("path");
 
 module.exports = {
@@ -11,7 +12,7 @@ module.exports = {
 			database: process.env.CHAT_DB_DATABASE,
 		},
 		migrations: {
-			directory: "./database/chat/migrations",
+			directory: path.join(__dirname, "database/chat/migrations"),
 		},
 	},
 };
