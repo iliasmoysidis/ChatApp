@@ -1,5 +1,5 @@
 <div class="header">
-  <span class="header-title">Chat App!</span>
+  <span class="header-title">{{ userName() }}</span>
   <div *ngIf="isAuthenticated">
     <button nbButton shape="rectangle" status="primary" (click)="logout()">
       <nb-icon icon="log-out-outline"></nb-icon>

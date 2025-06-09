@@ -22,4 +22,8 @@ export class ApiService {
       participantIds
     );
   }
+
+  getUserChats(): Observable<any> {
+    return this.http.get(`${environment.backend.url}/api/chats/`);
+  }
 }

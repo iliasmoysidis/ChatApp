@@ -41,10 +41,6 @@ module.exports = function(sequelize, DataTypes) {
     user_id: {
       type: DataTypes.STRING(255),
       allowNull: true
-    },
-    details_json_long_value: {
-      type: DataTypes.TEXT,
-      allowNull: true
     }
   }, {
     sequelize,

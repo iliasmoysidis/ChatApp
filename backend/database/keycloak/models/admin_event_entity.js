@@ -49,10 +49,6 @@ module.exports = function(sequelize, DataTypes) {
     resource_type: {
       type: DataTypes.STRING(64),
       allowNull: true
-    },
-    details_json: {
-      type: DataTypes.TEXT,
-      allowNull: true
     }
   }, {
     sequelize,
@@ -65,13 +61,6 @@ module.exports = function(sequelize, DataTypes) {
         unique: true,
         fields: [
           { name: "id" },
-        ]
-      },
-      {
-        name: "idx_admin_event_time",
-        fields: [
-          { name: "realm_id" },
-          { name: "admin_event_time" },
         ]
       },
     ]

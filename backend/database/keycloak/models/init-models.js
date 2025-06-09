@@ -15,6 +15,12 @@ var _client_scope = require("./client_scope");
 var _client_scope_attributes = require("./client_scope_attributes");
 var _client_scope_client = require("./client_scope_client");
 var _client_scope_role_mapping = require("./client_scope_role_mapping");
+var _client_session = require("./client_session");
+var _client_session_auth_status = require("./client_session_auth_status");
+var _client_session_note = require("./client_session_note");
+var _client_session_prot_mapper = require("./client_session_prot_mapper");
+var _client_session_role = require("./client_session_role");
+var _client_user_session_note = require("./client_user_session_note");
 var _component = require("./component");
 var _component_config = require("./component_config");
 var _composite_role = require("./composite_role");
@@ -38,14 +44,11 @@ var _identity_provider = require("./identity_provider");
 var _identity_provider_config = require("./identity_provider_config");
 var _identity_provider_mapper = require("./identity_provider_mapper");
 var _idp_mapper_config = require("./idp_mapper_config");
-var _jgroups_ping = require("./jgroups_ping");
 var _keycloak_group = require("./keycloak_group");
 var _keycloak_role = require("./keycloak_role");
 var _migration_model = require("./migration_model");
 var _offline_client_session = require("./offline_client_session");
 var _offline_user_session = require("./offline_user_session");
-var _org = require("./org");
-var _org_domain = require("./org_domain");
 var _policy_config = require("./policy_config");
 var _protocol_mapper = require("./protocol_mapper");
 var _protocol_mapper_config = require("./protocol_mapper_config");
@@ -70,11 +73,9 @@ var _resource_server_policy = require("./resource_server_policy");
 var _resource_server_resource = require("./resource_server_resource");
 var _resource_server_scope = require("./resource_server_scope");
 var _resource_uris = require("./resource_uris");
-var _revoked_token = require("./revoked_token");
 var _role_attribute = require("./role_attribute");
 var _scope_mapping = require("./scope_mapping");
 var _scope_policy = require("./scope_policy");
-var _server_config = require("./server_config");
 var _user_attribute = require("./user_attribute");
 var _user_consent = require("./user_consent");
 var _user_consent_client_scope = require("./user_consent_client_scope");
@@ -86,6 +87,9 @@ var _user_federation_provider = require("./user_federation_provider");
 var _user_group_membership = require("./user_group_membership");
 var _user_required_action = require("./user_required_action");
 var _user_role_mapping = require("./user_role_mapping");
+var _user_session = require("./user_session");
+var _user_session_note = require("./user_session_note");
+var _username_login_failure = require("./username_login_failure");
 var _web_origins = require("./web_origins");
 
 function initModels(sequelize) {
@@ -105,6 +109,12 @@ function initModels(sequelize) {
   var client_scope_attributes = _client_scope_attributes(sequelize, DataTypes);
   var client_scope_client = _client_scope_client(sequelize, DataTypes);
   var client_scope_role_mapping = _client_scope_role_mapping(sequelize, DataTypes);
+  var client_session = _client_session(sequelize, DataTypes);
+  var client_session_auth_status = _client_session_auth_status(sequelize, DataTypes);
+  var client_session_note = _client_session_note(sequelize, DataTypes);
+  var client_session_prot_mapper = _client_session_prot_mapper(sequelize, DataTypes);
+  var client_session_role = _client_session_role(sequelize, DataTypes);
+  var client_user_session_note = _client_user_session_note(sequelize, DataTypes);
   var component = _component(sequelize, DataTypes);
   var component_config = _component_config(sequelize, DataTypes);
   var composite_role = _composite_role(sequelize, DataTypes);
@@ -128,14 +138,11 @@ function initModels(sequelize) {
   var identity_provider_config = _identity_provider_config(sequelize, DataTypes);
   var identity_provider_mapper = _identity_provider_mapper(sequelize, DataTypes);
   var idp_mapper_config = _idp_mapper_config(sequelize, DataTypes);
-  var jgroups_ping = _jgroups_ping(sequelize, DataTypes);
   var keycloak_group = _keycloak_group(sequelize, DataTypes);
   var keycloak_role = _keycloak_role(sequelize, DataTypes);
   var migration_model = _migration_model(sequelize, DataTypes);
   var offline_client_session = _offline_client_session(sequelize, DataTypes);
   var offline_user_session = _offline_user_session(sequelize, DataTypes);
-  var org = _org(sequelize, DataTypes);
-  var org_domain = _org_domain(sequelize, DataTypes);
   var policy_config = _policy_config(sequelize, DataTypes);
   var protocol_mapper = _protocol_mapper(sequelize, DataTypes);
   var protocol_mapper_config = _protocol_mapper_config(sequelize, DataTypes);
@@ -160,11 +167,9 @@ function initModels(sequelize) {
   var resource_server_resource = _resource_server_resource(sequelize, DataTypes);
   var resource_server_scope = _resource_server_scope(sequelize, DataTypes);
   var resource_uris = _resource_uris(sequelize, DataTypes);
-  var revoked_token = _revoked_token(sequelize, DataTypes);
   var role_attribute = _role_attribute(sequelize, DataTypes);
   var scope_mapping = _scope_mapping(sequelize, DataTypes);
   var scope_policy = _scope_policy(sequelize, DataTypes);
-  var server_config = _server_config(sequelize, DataTypes);
   var user_attribute = _user_attribute(sequelize, DataTypes);
   var user_consent = _user_consent(sequelize, DataTypes);
   var user_consent_client_scope = _user_consent_client_scope(sequelize, DataTypes);
@@ -176,6 +181,9 @@ function initModels(sequelize) {
   var user_group_membership = _user_group_membership(sequelize, DataTypes);
   var user_required_action = _user_required_action(sequelize, DataTypes);
   var user_role_mapping = _user_role_mapping(sequelize, DataTypes);
+  var user_session = _user_session(sequelize, DataTypes);
+  var user_session_note = _user_session_note(sequelize, DataTypes);
+  var username_login_failure = _username_login_failure(sequelize, DataTypes);
   var web_origins = _web_origins(sequelize, DataTypes);
 
   keycloak_role.belongsToMany(keycloak_role, { as: 'composite_keycloak_roles', through: composite_role, foreignKey: "child_role", otherKey: "composite" });
@@ -208,6 +216,16 @@ function initModels(sequelize) {
   client_scope.hasMany(client_scope_role_mapping, { as: "client_scope_role_mappings", foreignKey: "scope_id"});
   protocol_mapper.belongsTo(client_scope, { as: "client_scope", foreignKey: "client_scope_id"});
   client_scope.hasMany(protocol_mapper, { as: "protocol_mappers", foreignKey: "client_scope_id"});
+  client_session_auth_status.belongsTo(client_session, { as: "client_session_client_session", foreignKey: "client_session"});
+  client_session.hasMany(client_session_auth_status, { as: "client_session_auth_statuses", foreignKey: "client_session"});
+  client_session_note.belongsTo(client_session, { as: "client_session_client_session", foreignKey: "client_session"});
+  client_session.hasMany(client_session_note, { as: "client_session_notes", foreignKey: "client_session"});
+  client_session_prot_mapper.belongsTo(client_session, { as: "client_session_client_session", foreignKey: "client_session"});
+  client_session.hasMany(client_session_prot_mapper, { as: "client_session_prot_mappers", foreignKey: "client_session"});
+  client_session_role.belongsTo(client_session, { as: "client_session_client_session", foreignKey: "client_session"});
+  client_session.hasMany(client_session_role, { as: "client_session_roles", foreignKey: "client_session"});
+  client_user_session_note.belongsTo(client_session, { as: "client_session_client_session", foreignKey: "client_session"});
+  client_session.hasMany(client_user_session_note, { as: "client_user_session_notes", foreignKey: "client_session"});
   component_config.belongsTo(component, { as: "component", foreignKey: "component_id"});
   component.hasMany(component_config, { as: "component_configs", foreignKey: "component_id"});
   identity_provider_config.belongsTo(identity_provider, { as: "identity_provider", foreignKey: "identity_provider_id"});
@@ -322,6 +340,10 @@ function initModels(sequelize) {
   user_federation_provider.hasMany(user_federation_config, { as: "user_federation_configs", foreignKey: "user_federation_provider_id"});
   user_federation_mapper.belongsTo(user_federation_provider, { as: "federation_provider", foreignKey: "federation_provider_id"});
   user_federation_provider.hasMany(user_federation_mapper, { as: "user_federation_mappers", foreignKey: "federation_provider_id"});
+  client_session.belongsTo(user_session, { as: "session", foreignKey: "session_id"});
+  user_session.hasMany(client_session, { as: "client_sessions", foreignKey: "session_id"});
+  user_session_note.belongsTo(user_session, { as: "user_session_user_session", foreignKey: "user_session"});
+  user_session.hasMany(user_session_note, { as: "user_session_notes", foreignKey: "user_session"});
 
   return {
     admin_event_entity,
@@ -340,6 +362,12 @@ function initModels(sequelize) {
     client_scope_attributes,
     client_scope_client,
     client_scope_role_mapping,
+    client_session,
+    client_session_auth_status,
+    client_session_note,
+    client_session_prot_mapper,
+    client_session_role,
+    client_user_session_note,
     component,
     component_config,
     composite_role,
@@ -363,14 +391,11 @@ function initModels(sequelize) {
     identity_provider_config,
     identity_provider_mapper,
     idp_mapper_config,
-    jgroups_ping,
     keycloak_group,
     keycloak_role,
     migration_model,
     offline_client_session,
     offline_user_session,
-    org,
-    org_domain,
     policy_config,
     protocol_mapper,
     protocol_mapper_config,
@@ -395,11 +420,9 @@ function initModels(sequelize) {
     resource_server_resource,
     resource_server_scope,
     resource_uris,
-    revoked_token,
     role_attribute,
     scope_mapping,
     scope_policy,
-    server_config,
     user_attribute,
     user_consent,
     user_consent_client_scope,
@@ -411,6 +434,9 @@ function initModels(sequelize) {
     user_group_membership,
     user_required_action,
     user_role_mapping,
+    user_session,
+    user_session_note,
+    username_login_failure,
     web_origins,
   };
 }

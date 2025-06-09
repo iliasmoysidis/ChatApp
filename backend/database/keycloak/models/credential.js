@@ -41,11 +41,6 @@ module.exports = function(sequelize, DataTypes) {
     priority: {
       type: DataTypes.INTEGER,
       allowNull: true
-    },
-    version: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      defaultValue: 0
     }
   }, {
     sequelize,

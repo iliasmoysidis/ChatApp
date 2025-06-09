@@ -80,13 +80,6 @@ module.exports = function(sequelize, DataTypes) {
         ]
       },
       {
-        name: "idx_user_service_account",
-        fields: [
-          { name: "realm_id" },
-          { name: "service_account_client_link" },
-        ]
-      },
-      {
         name: "uk_dykn684sl8up1crfei6eckhd7",
         unique: true,
         fields: [

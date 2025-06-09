@@ -73,18 +73,6 @@ module.exports = function(sequelize, DataTypes) {
         ]
       },
       {
-        name: "idx_perm_ticket_owner",
-        fields: [
-          { name: "owner" },
-        ]
-      },
-      {
-        name: "idx_perm_ticket_requester",
-        fields: [
-          { name: "requester" },
-        ]
-      },
-      {
         name: "uk_frsr6t700s9v50bu18ws5pmt",
         unique: true,
         fields: [

@@ -9,6 +9,7 @@ import {
 } from '@nebular/theme';
 import { ChatService } from '../../services/chat/chat.service';
 import { User } from '../../interfaces/user.interface';
+import { ApiService } from '../../services/api/api.service';
 
 @Component({
   selector: 'app-chats',
@@ -48,7 +49,19 @@ export class ChatsComponent {
     },
   ];
 
-  constructor(private readonly chatService: ChatService) {}
+  constructor(
+    private readonly apiService: ApiService,
+    private readonly chatService: ChatService
+  ) {
+    this.apiService.getUserChats().subscribe({
+      next: (response) => {
+        console.log('Chat created:', response);
+      },
+      error: (err) => {
+        console.error('Create chat error:', err);
+      },
+    });
+  }
 
   onClick(user: User) {
     this.chatService.updateUser(user);

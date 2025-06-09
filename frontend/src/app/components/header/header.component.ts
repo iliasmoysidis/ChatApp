@@ -3,8 +3,7 @@ import { Component } from '@angular/core';
 import { NbButtonModule, NbIconModule } from '@nebular/theme';
 import Keycloak from 'keycloak-js';
 import { AuthService } from '../../services/auth/auth.service';
-import { Socket } from 'ngx-socket-io';
-import { environment } from '../../../environments/environment';
+import { computed } from '@angular/core';
 
 @Component({
   selector: 'app-header',
@@ -13,14 +12,14 @@ import { environment } from '../../../environments/environment';
   styleUrl: './header.component.css',
 })
 export class HeaderComponent {
+  public name = '';
   constructor(
     private readonly keycloak: Keycloak,
-    private auth: AuthService,
-    private socket: Socket
+    private authService: AuthService
   ) {}
 
   get isAuthenticated() {
-    return this.auth.isAuthenticated();
+    return this.authService.isAuthenticated();
   }
 
   logout() {
@@ -34,4 +33,12 @@ export class HeaderComponent {
   register() {
     this.keycloak.register();
   }
+
+  userName = computed(() => {
+    const token = this.authService.decodedToken();
+    if (token) {
+      return `${token.given_name ?? ''} ${token.family_name ?? ''}`.trim();
+    }
+    return '';
+  });
 }
