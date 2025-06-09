@@ -177,4 +177,28 @@ router.get("/", verifyToken, async (req, res) => {
 	}
 });
 
+router.delete("/:id", verifyToken, async (req, res) => {
+	try {
+		const email = req.user.email;
+		const id = req.params.id;
+
+		const record = await chatModels.chat_participant.findOne({
+			where: {
+				chat_id: id,
+				user_id: email,
+			},
+		});
+
+		if (!record) {
+			return res.status(400).json({ error: "Chat not found" });
+		}
+
+		await record.destroy();
+		res.status(200).json({ message: "Chat was successfully deleted" });
+	} catch (error) {
+		console.error("Error fetching user chats:", error);
+		res.status(500).json({ error: "Internal server error" });
+	}
+});
+
 module.exports = router;

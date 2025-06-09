@@ -18,9 +18,18 @@
       *ngFor="let chat of chats"
       (click)="onClick(chat)"
     >
-      <nb-user [name]="chat.chatName" [showName]="true">{{
-        chat.chatName
-      }}</nb-user>
+      <div class="chat-content">
+        <nb-user [name]="chat.chatName" [showName]="true">{{
+          chat.chatName
+        }}</nb-user>
+
+        <button nbButton class="right-button">
+          <nb-icon
+            icon="trash-2-outline"
+            (click)="deleteChat(chat); $event.stopPropagation()"
+          ></nb-icon>
+        </button>
+      </div>
     </nb-list-item>
   </nb-list>
 </nb-card>

@@ -26,4 +26,8 @@ export class ApiService {
   getUserChats(): Observable<any> {
     return this.http.get(`${environment.backend.url}/api/chats/`);
   }
+
+  deleteChat(id: string) {
+    return this.http.delete(`${environment.backend.url}/api/chats/${id}`);
+  }
 }

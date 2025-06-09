@@ -35,6 +35,12 @@ module.exports = function(sequelize, DataTypes) {
           { name: "user_consent_id" },
         ]
       },
+      {
+        name: "idx_usconsent_scope_id",
+        fields: [
+          { name: "scope_id" },
+        ]
+      },
     ]
   });
 };

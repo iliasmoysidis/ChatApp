@@ -38,3 +38,22 @@
 .filter-icon {
   margin-right: 3px;
 }
+
+.chat-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.right-button {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: inherit;
+}
+
+.right-button:hover {
+  font-weight: bold;
+  transform: scale(1.1);
+}

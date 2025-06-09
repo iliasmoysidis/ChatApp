@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import {
+  NbButtonModule,
   NbCardModule,
   NbIconModule,
   NbInputModule,
@@ -20,6 +21,7 @@ import { Chat } from '../../interfaces/chat.interface';
     NbUserModule,
     NbIconModule,
     NbInputModule,
+    NbButtonModule,
   ],
   templateUrl: './chats.component.html',
   styleUrl: './chats.component.css',
@@ -32,19 +34,21 @@ export class ChatsComponent {
     private readonly apiService: ApiService,
     private readonly chatService: ChatService
   ) {
-    this.apiService.getUserChats().subscribe({
-      next: (response) => {
-        this.chats = response.chats;
-        console.log('User chats:', this.chats);
-      },
-      error: (err) => {
-        console.error('Fetching user chats error:', err);
-      },
+    this.chatService.currentChat$.subscribe((chat) => {
+      this.selectedChat = chat;
+    });
+
+    this.chatService.chats$.subscribe((chats) => {
+      this.chats = chats;
     });
   }
 
   onClick(chat: Chat) {
     this.chatService.updateChat(chat);
     this.selectedChat = chat;
+  }
+
+  deleteChat(chat: Chat) {
+    this.chatService.deleteChat(chat);
   }
 }

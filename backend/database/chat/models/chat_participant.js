@@ -41,6 +41,23 @@ module.exports = function (sequelize, DataTypes) {
 					fields: ["user_id"],
 				},
 			],
+			hooks: {
+				afterDestroy: async (participant, options) => {
+					const chatId = participant.chat_id;
+
+					const count = await sequelize.models.chat_participant.count(
+						{
+							where: { chat_id: chatId },
+						}
+					);
+
+					if (count === 0) {
+						await sequelize.models.chat.destroy({
+							where: { id: chatId },
+						});
+					}
+				},
+			},
 		}
 	);
 };
