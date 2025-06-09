@@ -90,6 +90,8 @@ export class NewChatComponent {
           console.error('Create chat error:', err);
         },
       });
+
+      this.chatMembers = [];
     }
   }
 }
