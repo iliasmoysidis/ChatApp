@@ -18,7 +18,7 @@ export class ApiService {
 
   createChat(participantIds: string[]): Observable<any> {
     return this.http.post(
-      `${environment.backend.url}/api/chats/create`,
+      `${environment.backend.url}/api/chats/`,
       participantIds
     );
   }

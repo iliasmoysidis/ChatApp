@@ -4,7 +4,7 @@ const verifyToken = require("../middleware/api-auth");
 const { chatModels } = require("../database/chat/models/index");
 const { chatSequelize } = require("../database/chat/config/sequelize.config");
 
-router.post("/create", verifyToken, async (req, res) => {
+router.post("/", verifyToken, async (req, res) => {
 	const participantIds = req.body;
 
 	if (
