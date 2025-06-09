@@ -91,7 +91,7 @@ export class NewChatComponent {
         },
       });
 
-      this.chatMembers = [];
+      this.clearChatMembers();
     }
   }
 }

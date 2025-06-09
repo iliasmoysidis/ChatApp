@@ -6,6 +6,15 @@ const { chatSequelize } = require("../database/chat/config/sequelize.config");
 const { keycloakModels } = require("../database/keycloak/models");
 const { Op } = require("sequelize");
 
+function createChatName(users) {
+	const names = users.map((u) => u.first_name);
+
+	if (names.length === 0) return "";
+	if (names.length === 1) return names[0];
+	if (names.length === 2) return names.join(" and ");
+	return names.slice(0, -1).join(", ") + " and " + names[names.length - 1];
+}
+
 router.post("/", verifyToken, async (req, res) => {
 	try {
 		const transaction = await chatSequelize.transaction();
@@ -141,6 +150,8 @@ router.get("/", verifyToken, async (req, res) => {
 			userMap[u.email] = {
 				email: u.email,
 				username: u.username,
+				firstName: u.first_name,
+				lastName: u.last_name,
 				name: `${u.first_name} ${u.last_name}`,
 			};
 		});
@@ -148,6 +159,12 @@ router.get("/", verifyToken, async (req, res) => {
 		// Step 6: Replace user_id with user object
 		const result = Object.values(chatMap).map((chat) => ({
 			id: chat.id,
+			chatName: createChatName(
+				chat.users
+					.map((email) => userMap[email])
+					.filter(Boolean)
+					.map((u) => ({ first_name: u.firstName })) // map to expected structure
+			),
 			users: chat.users
 				.map((email) => userMap[email] || null)
 				.filter(Boolean),

@@ -8,8 +8,8 @@ import {
   NbUserModule,
 } from '@nebular/theme';
 import { ChatService } from '../../services/chat/chat.service';
-import { User } from '../../interfaces/user.interface';
 import { ApiService } from '../../services/api/api.service';
+import { Chat } from '../../interfaces/chat.interface';
 
 @Component({
   selector: 'app-chats',
@@ -25,29 +25,8 @@ import { ApiService } from '../../services/api/api.service';
   styleUrl: './chats.component.css',
 })
 export class ChatsComponent {
-  selectedUser: User | null = null;
-  users: User[] = [
-    {
-      id: '1',
-      name: 'Carla Espinosa',
-      username: 'dorothy123',
-      email: 'asdf@gmail.com',
-    },
-    { id: '1', name: 'Bob Kelso', username: 'lex5', email: 'asdf@gmail.com' },
-    {
-      id: '1',
-      name: 'Janitor',
-      username: 'xx_cool_kid_xx',
-      email: 'asdf@gmail.com',
-    },
-    { id: '1', name: 'Perry Cox', username: '1337', email: 'asdf@gmail.com' },
-    {
-      id: '1',
-      name: 'Ben Sullivan',
-      username: 'lil_moy',
-      email: 'asdf@gmail.com',
-    },
-  ];
+  selectedChat: Chat | null = null;
+  chats: Chat[] = [];
 
   constructor(
     private readonly apiService: ApiService,
@@ -55,16 +34,17 @@ export class ChatsComponent {
   ) {
     this.apiService.getUserChats().subscribe({
       next: (response) => {
-        console.log('Chat created:', response);
+        this.chats = response.chats;
+        console.log('User chats:', this.chats);
       },
       error: (err) => {
-        console.error('Create chat error:', err);
+        console.error('Fetching user chats error:', err);
       },
     });
   }
 
-  onClick(user: User) {
-    this.chatService.updateUser(user);
-    this.selectedUser = user;
+  onClick(chat: Chat) {
+    this.chatService.updateChat(chat);
+    this.selectedChat = chat;
   }
 }

@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { User } from '../../interfaces/user.interface';
+import { Chat } from '../../interfaces/chat.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ChatService {
-  private userSource = new BehaviorSubject<User | null>(null);
-  currentUser$ = this.userSource.asObservable();
+  private chatSource = new BehaviorSubject<Chat | null>(null);
+  currentChat$ = this.chatSource.asObservable();
 
-  updateUser(user: User) {
-    this.userSource.next(user);
+  updateChat(chat: Chat) {
+    this.chatSource.next(chat);
   }
 }

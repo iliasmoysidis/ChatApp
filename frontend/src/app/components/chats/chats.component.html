@@ -14,11 +14,13 @@
   <nb-list>
     <nb-list-item
       class="chat-item"
-      [ngClass]="{ highlighted: selectedUser === user }"
-      *ngFor="let user of users"
-      (click)="onClick(user)"
+      [ngClass]="{ highlighted: selectedChat === chat }"
+      *ngFor="let chat of chats"
+      (click)="onClick(chat)"
     >
-      <nb-user [name]="user.name" [title]="user.username"> </nb-user>
+      <nb-user [name]="chat.chatName" [showName]="true">{{
+        chat.chatName
+      }}</nb-user>
     </nb-list-item>
   </nb-list>
 </nb-card>
