@@ -13,18 +13,17 @@ module.exports = function(sequelize, DataTypes) {
     },
     parent_group: {
       type: DataTypes.STRING(36),
-      allowNull: false,
+      allowNull: true,
       unique: "sibling_names"
     },
     realm_id: {
       type: DataTypes.STRING(36),
       allowNull: true,
+      references: {
+        model: 'realm',
+        key: 'id'
+      },
       unique: "sibling_names"
-    },
-    type: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      defaultValue: 0
     }
   }, {
     sequelize,

@@ -69,7 +69,10 @@ services:
         volumes:
             - ./websocket:/usr/src/app
         depends_on:
-            - keycloak-server
+            keycloak-db:
+                condition: service_healthy
+            redis:
+                condition: service_healthy
         env_file:
             - .env
 
@@ -122,6 +125,26 @@ services:
         env_file:
             - .env
 
+    redis:
+        image: redis:8.0.2
+        container_name: redis-server
+        ports:
+            - "6379:6379"
+        volumes:
+            - redis_data:/data
+            - ./redis/redis.conf:/usr/local/etc/redis/redis.conf
+        command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+        restart: unless-stopped
+        healthcheck:
+            test: ["CMD", "redis-cli", "ping"]
+            interval: 30s
+            timeout: 5s
+            retries: 3
+            start_period: 10s
+        env_file:
+            - .env
+
 volumes:
     keycloak_data:
     chat_data:
+    redis_data:

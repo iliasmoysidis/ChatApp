@@ -55,6 +55,10 @@ module.exports = function(sequelize, DataTypes) {
     realm_id: {
       type: DataTypes.STRING(36),
       allowNull: true,
+      references: {
+        model: 'realm',
+        key: 'id'
+      },
       unique: "uk_b71cjlbenv945rb6gcon438at"
     },
     protocol: {
@@ -116,7 +120,25 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       defaultValue: false
     },
-    always_display_in_console: {
+    client_template_id: {
+      type: DataTypes.STRING(36),
+      allowNull: true,
+      references: {
+        model: 'client_template',
+        key: 'id'
+      }
+    },
+    use_template_config: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
+    },
+    use_template_scope: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
+    },
+    use_template_mappers: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: false
@@ -132,12 +154,6 @@ module.exports = function(sequelize, DataTypes) {
         unique: true,
         fields: [
           { name: "id" },
-        ]
-      },
-      {
-        name: "idx_client_id",
-        fields: [
-          { name: "client_id" },
         ]
       },
       {

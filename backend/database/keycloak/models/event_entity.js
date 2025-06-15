@@ -41,10 +41,6 @@ module.exports = function(sequelize, DataTypes) {
     user_id: {
       type: DataTypes.STRING(255),
       allowNull: true
-    },
-    details_json_long_value: {
-      type: DataTypes.TEXT,
-      allowNull: true
     }
   }, {
     sequelize,
@@ -57,13 +53,6 @@ module.exports = function(sequelize, DataTypes) {
         unique: true,
         fields: [
           { name: "id" },
-        ]
-      },
-      {
-        name: "idx_event_time",
-        fields: [
-          { name: "realm_id" },
-          { name: "event_time" },
         ]
       },
     ]

@@ -11,6 +11,10 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       unique: "uk_frsr6t700s9v50bu18ws5ha6"
     },
+    uri: {
+      type: DataTypes.STRING(255),
+      allowNull: true
+    },
     type: {
       type: DataTypes.STRING(255),
       allowNull: true
@@ -20,7 +24,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     },
     owner: {
-      type: DataTypes.STRING(255),
+      type: DataTypes.STRING(36),
       allowNull: false,
       unique: "uk_frsr6t700s9v50bu18ws5ha6"
     },
@@ -32,15 +36,6 @@ module.exports = function(sequelize, DataTypes) {
         key: 'id'
       },
       unique: "uk_frsr6t700s9v50bu18ws5ha6"
-    },
-    owner_managed_access: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: false
-    },
-    display_name: {
-      type: DataTypes.STRING(255),
-      allowNull: true
     }
   }, {
     sequelize,

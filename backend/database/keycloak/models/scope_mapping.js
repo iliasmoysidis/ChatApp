@@ -13,7 +13,11 @@ module.exports = function(sequelize, DataTypes) {
     role_id: {
       type: DataTypes.STRING(36),
       allowNull: false,
-      primaryKey: true
+      primaryKey: true,
+      references: {
+        model: 'keycloak_role',
+        key: 'id'
+      }
     }
   }, {
     sequelize,

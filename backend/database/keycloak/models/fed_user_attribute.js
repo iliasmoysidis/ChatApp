@@ -25,18 +25,6 @@ module.exports = function(sequelize, DataTypes) {
     value: {
       type: DataTypes.STRING(2024),
       allowNull: true
-    },
-    long_value_hash: {
-      type: DataTypes.BLOB,
-      allowNull: true
-    },
-    long_value_hash_lower_case: {
-      type: DataTypes.BLOB,
-      allowNull: true
-    },
-    long_value: {
-      type: DataTypes.TEXT,
-      allowNull: true
     }
   }, {
     sequelize,
@@ -49,20 +37,6 @@ module.exports = function(sequelize, DataTypes) {
         unique: true,
         fields: [
           { name: "id" },
-        ]
-      },
-      {
-        name: "fed_user_attr_long_values",
-        fields: [
-          { name: "long_value_hash" },
-          { name: "name" },
-        ]
-      },
-      {
-        name: "fed_user_attr_long_values_lower_case",
-        fields: [
-          { name: "long_value_hash_lower_case" },
-          { name: "name" },
         ]
       },
       {

@@ -12,13 +12,8 @@ module.exports = function(sequelize, DataTypes) {
       defaultValue: false
     },
     policy_enforce_mode: {
-      type: DataTypes.SMALLINT,
+      type: DataTypes.STRING(15),
       allowNull: false
-    },
-    decision_strategy: {
-      type: DataTypes.SMALLINT,
-      allowNull: false,
-      defaultValue: 1
     }
   }, {
     sequelize,

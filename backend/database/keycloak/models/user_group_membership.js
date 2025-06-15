@@ -14,10 +14,6 @@ module.exports = function(sequelize, DataTypes) {
         model: 'user_entity',
         key: 'id'
       }
-    },
-    membership_type: {
-      type: DataTypes.STRING(255),
-      allowNull: false
     }
   }, {
     sequelize,

@@ -5,6 +5,7 @@ const http = require("http");
 const socketIO = require("socket.io");
 const verifyToken = require("./middleware/keycloak-websocket-auth");
 const { setupSocket } = require("./socket/socket-setup");
+const redis = require("./database/redis/config/redis.config");
 
 const app = express();
 app.use(express.json());

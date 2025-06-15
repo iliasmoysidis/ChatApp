@@ -23,10 +23,6 @@ module.exports = function(sequelize, DataTypes) {
         key: 'id'
       },
       unique: "uk_frsrst700s9v50bu18ws5ha6"
-    },
-    display_name: {
-      type: DataTypes.STRING(255),
-      allowNull: true
     }
   }, {
     sequelize,

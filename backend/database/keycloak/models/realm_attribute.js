@@ -6,6 +6,10 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       primaryKey: true
     },
+    value: {
+      type: DataTypes.STRING(255),
+      allowNull: true
+    },
     realm_id: {
       type: DataTypes.STRING(36),
       allowNull: false,
@@ -14,10 +18,6 @@ module.exports = function(sequelize, DataTypes) {
         model: 'realm',
         key: 'id'
       }
-    },
-    value: {
-      type: DataTypes.TEXT,
-      allowNull: true
     }
   }, {
     sequelize,

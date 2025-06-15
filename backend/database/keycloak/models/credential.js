@@ -6,12 +6,24 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       primaryKey: true
     },
+    device: {
+      type: DataTypes.STRING(255),
+      allowNull: true
+    },
+    hash_iterations: {
+      type: DataTypes.INTEGER,
+      allowNull: true
+    },
     salt: {
       type: DataTypes.BLOB,
       allowNull: true
     },
     type: {
       type: DataTypes.STRING(255),
+      allowNull: true
+    },
+    value: {
+      type: DataTypes.STRING(4000),
       allowNull: true
     },
     user_id: {
@@ -26,26 +38,24 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.BIGINT,
       allowNull: true
     },
-    user_label: {
-      type: DataTypes.STRING(255),
-      allowNull: true
-    },
-    secret_data: {
-      type: DataTypes.TEXT,
-      allowNull: true
-    },
-    credential_data: {
-      type: DataTypes.TEXT,
-      allowNull: true
-    },
-    priority: {
-      type: DataTypes.INTEGER,
-      allowNull: true
-    },
-    version: {
+    counter: {
       type: DataTypes.INTEGER,
       allowNull: true,
       defaultValue: 0
+    },
+    digits: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: 6
+    },
+    period: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: 30
+    },
+    algorithm: {
+      type: DataTypes.STRING(36),
+      allowNull: true
     }
   }, {
     sequelize,

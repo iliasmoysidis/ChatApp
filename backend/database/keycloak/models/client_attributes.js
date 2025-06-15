@@ -10,14 +10,14 @@ module.exports = function(sequelize, DataTypes) {
         key: 'id'
       }
     },
+    value: {
+      type: DataTypes.STRING(4000),
+      allowNull: true
+    },
     name: {
       type: DataTypes.STRING(255),
       allowNull: false,
       primaryKey: true
-    },
-    value: {
-      type: DataTypes.TEXT,
-      allowNull: true
     }
   }, {
     sequelize,
@@ -30,12 +30,6 @@ module.exports = function(sequelize, DataTypes) {
         unique: true,
         fields: [
           { name: "client_id" },
-          { name: "name" },
-        ]
-      },
-      {
-        name: "idx_client_att_by_name_value",
-        fields: [
           { name: "name" },
         ]
       },

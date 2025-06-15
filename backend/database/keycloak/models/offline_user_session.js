@@ -14,9 +14,9 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(36),
       allowNull: false
     },
-    created_on: {
+    last_session_refresh: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: true
     },
     offline_flag: {
       type: DataTypes.STRING(4),
@@ -26,20 +26,6 @@ module.exports = function(sequelize, DataTypes) {
     data: {
       type: DataTypes.TEXT,
       allowNull: true
-    },
-    last_session_refresh: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      defaultValue: 0
-    },
-    broker_session_id: {
-      type: DataTypes.STRING(1024),
-      allowNull: true
-    },
-    version: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      defaultValue: 0
     }
   }, {
     sequelize,
@@ -52,29 +38,6 @@ module.exports = function(sequelize, DataTypes) {
         unique: true,
         fields: [
           { name: "user_session_id" },
-          { name: "offline_flag" },
-        ]
-      },
-      {
-        name: "idx_offline_uss_by_broker_session_id",
-        fields: [
-          { name: "broker_session_id" },
-          { name: "realm_id" },
-        ]
-      },
-      {
-        name: "idx_offline_uss_by_last_session_refresh",
-        fields: [
-          { name: "realm_id" },
-          { name: "offline_flag" },
-          { name: "last_session_refresh" },
-        ]
-      },
-      {
-        name: "idx_offline_uss_by_user",
-        fields: [
-          { name: "user_id" },
-          { name: "realm_id" },
           { name: "offline_flag" },
         ]
       },
