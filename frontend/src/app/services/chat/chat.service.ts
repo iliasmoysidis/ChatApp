@@ -25,7 +25,8 @@ export class ChatService {
   private getUserChats() {
     this.apiService.getUserChats().subscribe({
       next: (response) => {
-        this.chatsSource.next(response.chats);
+        console.log(response);
+        this.chatsSource.next(response.chatrooms);
       },
       error: (err) => {
         console.error('Fetching user chats error:', err);

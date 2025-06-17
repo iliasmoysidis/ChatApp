@@ -8,6 +8,8 @@ async function verifyChatroom(req, res, next) {
 		if (!chatroom || Object.keys(chatroom).length === 0) {
 			return res.status(404).json({ message: "Chatroom not found" });
 		}
+
+		next();
 	} catch (error) {
 		console.error("Unexpected error: ", error);
 		res.status(500).json({

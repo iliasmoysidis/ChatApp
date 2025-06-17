@@ -1,4 +1,4 @@
-<nb-chat [title]="chat ? chat.chatName : 'Welcome to Chat App'">
+<nb-chat [title]="chat ? chat.name : 'Welcome to Chat App'">
   <nb-chat-message
     *ngFor="let msg of messages"
     [type]="msg.type"

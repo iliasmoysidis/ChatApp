@@ -30,10 +30,7 @@ export class ChatsComponent {
   selectedChat: Chat | null = null;
   chats: Chat[] = [];
 
-  constructor(
-    private readonly apiService: ApiService,
-    private readonly chatService: ChatService
-  ) {
+  constructor(private readonly chatService: ChatService) {
     this.chatService.currentChat$.subscribe((chat) => {
       this.selectedChat = chat;
     });

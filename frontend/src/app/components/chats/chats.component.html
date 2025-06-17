@@ -19,9 +19,7 @@
       (click)="onClick(chat)"
     >
       <div class="chat-content">
-        <nb-user [name]="chat.chatName" [showName]="true">{{
-          chat.chatName
-        }}</nb-user>
+        <nb-user [name]="chat.name" [showName]="true">{{ chat.name }}</nb-user>
 
         <button nbButton class="right-button">
           <nb-icon
