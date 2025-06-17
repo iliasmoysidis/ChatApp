@@ -52,4 +52,8 @@ export class AuthService {
       }
     });
   }
+
+  get accessToken(): string | null {
+    return this.keycloak.token || null;
+  }
 }

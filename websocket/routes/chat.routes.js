@@ -72,6 +72,7 @@ router.get("/", verifyToken, checkTokenEmail, async (req, res) => {
 	try {
 		const email = req.email;
 		const chatroomIds = await redis.smembers(`user:${email}:chatrooms`);
+		console.log(chatroomIds);
 		if (chatroomIds.length === 0) {
 			return res.status(200).json({ chatrooms: [] });
 		}
