@@ -6,6 +6,7 @@ const {
 } = require("../middleware/keycloak-api-auth");
 const { verifyParticipants } = require("../middleware/keycloak-users");
 const { redis } = require("../database/redis/config/redis.config");
+const { verifyChatroom } = require("../middleware/redis-chatroom");
 
 function createChatName(users) {
 	const names = users.map((u) => u.first_name);
@@ -105,3 +106,42 @@ router.get("/", verifyToken, checkTokenEmail, async (req, res) => {
 		});
 	}
 });
+
+router.delete(
+	"/:id",
+	verifyToken,
+	checkTokenEmail,
+	verifyChatroom,
+	async (req, res) => {
+		try {
+			const email = req.email;
+			const chatroomId = req.params.id;
+
+			await redis.srem(`chatroom:${chatroomId}:participants`, email);
+			await redis.srem(`user:${email}:chatrooms`, chatroomId);
+
+			const participantSet = await redis.smembers(
+				`chatroom:${chatroomId}:participants`
+			);
+			await redis.hset(
+				`chatroom:${chatroomId}`,
+				"participants",
+				JSON.stringify(participantSet)
+			);
+
+			if (participantSet.length === 0) {
+				await redis.del(`chatroom:${chatroomId}`);
+				await redis.del(`chatroom:${chatroomId}:participants`);
+			}
+
+			res.status(200).json({
+				message: `User ${email} removed from chatroom ${chatroomId}`,
+			});
+		} catch (error) {
+			console.error("Unexpected error: ", error);
+			res.status(500).json({
+				message: "Internal server error",
+			});
+		}
+	}
+);
