@@ -14,10 +14,6 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(36),
       allowNull: false,
       primaryKey: true,
-      references: {
-        model: 'keycloak_group',
-        key: 'id'
-      },
       unique: "con_group_id_def_groups"
     }
   }, {

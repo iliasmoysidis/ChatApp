@@ -52,7 +52,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     },
     service_account_client_link: {
-      type: DataTypes.STRING(36),
+      type: DataTypes.STRING(255),
       allowNull: true
     },
     not_before: {
@@ -77,6 +77,13 @@ module.exports = function(sequelize, DataTypes) {
         name: "idx_user_email",
         fields: [
           { name: "email" },
+        ]
+      },
+      {
+        name: "idx_user_service_account",
+        fields: [
+          { name: "realm_id" },
+          { name: "service_account_client_link" },
         ]
       },
       {

@@ -35,6 +35,10 @@ module.exports = function(sequelize, DataTypes) {
     provider_id: {
       type: DataTypes.STRING(255),
       allowNull: true
+    },
+    priority: {
+      type: DataTypes.INTEGER,
+      allowNull: true
     }
   }, {
     sequelize,

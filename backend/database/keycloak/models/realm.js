@@ -105,11 +105,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     master_admin_client: {
       type: DataTypes.STRING(36),
-      allowNull: true,
-      references: {
-        model: 'client',
-        key: 'id'
-      }
+      allowNull: true
     },
     login_lifespan: {
       type: DataTypes.INTEGER,
@@ -227,6 +223,25 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: true,
       defaultValue: 0
+    },
+    allow_user_managed_access: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
+    },
+    sso_max_lifespan_remember_me: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0
+    },
+    sso_idle_timeout_remember_me: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0
+    },
+    default_role: {
+      type: DataTypes.STRING(255),
+      allowNull: true
     }
   }, {
     sequelize,

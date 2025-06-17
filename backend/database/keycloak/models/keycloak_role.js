@@ -7,7 +7,7 @@ module.exports = function(sequelize, DataTypes) {
       primaryKey: true
     },
     client_realm_constraint: {
-      type: DataTypes.STRING(36),
+      type: DataTypes.STRING(255),
       allowNull: true,
       unique: "UK_J3RWUVD56ONTGSUHOGM184WW2-2"
     },
@@ -31,11 +31,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     client: {
       type: DataTypes.STRING(36),
-      allowNull: true,
-      references: {
-        model: 'client',
-        key: 'id'
-      }
+      allowNull: true
     },
     realm: {
       type: DataTypes.STRING(36),
@@ -44,11 +40,6 @@ module.exports = function(sequelize, DataTypes) {
         model: 'realm',
         key: 'id'
       }
-    },
-    scope_param_required: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: false
     }
   }, {
     sequelize,

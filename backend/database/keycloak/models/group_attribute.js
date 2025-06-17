@@ -37,6 +37,12 @@ module.exports = function(sequelize, DataTypes) {
         ]
       },
       {
+        name: "idx_group_att_by_name_value",
+        fields: [
+          { name: "name" },
+        ]
+      },
+      {
         name: "idx_group_attr_group",
         fields: [
           { name: "group_id" },

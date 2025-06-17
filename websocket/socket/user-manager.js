@@ -1,4 +1,4 @@
-const redis = required("../chat/redis/config/redis.config");
+const redis = require("../database/redis/config/redis.config");
 
 async function addConnection(socket) {
 	const socketId = socket.id;

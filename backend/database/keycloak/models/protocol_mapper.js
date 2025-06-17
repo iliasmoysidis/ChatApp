@@ -18,15 +18,6 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(255),
       allowNull: false
     },
-    consent_required: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: false
-    },
-    consent_text: {
-      type: DataTypes.STRING(255),
-      allowNull: true
-    },
     client_id: {
       type: DataTypes.STRING(36),
       allowNull: true,
@@ -35,11 +26,11 @@ module.exports = function(sequelize, DataTypes) {
         key: 'id'
       }
     },
-    client_template_id: {
+    client_scope_id: {
       type: DataTypes.STRING(36),
       allowNull: true,
       references: {
-        model: 'client_template',
+        model: 'client_scope',
         key: 'id'
       }
     }

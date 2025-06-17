@@ -20,11 +20,11 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     decision_strategy: {
-      type: DataTypes.STRING(20),
+      type: DataTypes.SMALLINT,
       allowNull: true
     },
     logic: {
-      type: DataTypes.STRING(20),
+      type: DataTypes.SMALLINT,
       allowNull: true
     },
     resource_server_id: {
@@ -35,6 +35,10 @@ module.exports = function(sequelize, DataTypes) {
         key: 'id'
       },
       unique: "uk_frsrpt700s9v50bu18ws5ha6"
+    },
+    owner: {
+      type: DataTypes.STRING(255),
+      allowNull: true
     }
   }, {
     sequelize,

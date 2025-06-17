@@ -48,6 +48,12 @@ module.exports = function(sequelize, DataTypes) {
         ]
       },
       {
+        name: "idx_component_provider_type",
+        fields: [
+          { name: "provider_type" },
+        ]
+      },
+      {
         name: "idx_component_realm",
         fields: [
           { name: "realm_id" },

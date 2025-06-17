@@ -7,9 +7,9 @@ module.exports = function(sequelize, DataTypes) {
       primaryKey: true
     },
     client_id: {
-      type: DataTypes.STRING(36),
+      type: DataTypes.STRING(255),
       allowNull: true,
-      unique: "uk_jkuwuvd56ontgsuhogm8uewrt"
+      unique: "uk_local_consent"
     },
     user_id: {
       type: DataTypes.STRING(36),
@@ -18,7 +18,7 @@ module.exports = function(sequelize, DataTypes) {
         model: 'user_entity',
         key: 'id'
       },
-      unique: "uk_jkuwuvd56ontgsuhogm8uewrt"
+      unique: "uk_local_consent"
     },
     created_date: {
       type: DataTypes.BIGINT,
@@ -31,12 +31,12 @@ module.exports = function(sequelize, DataTypes) {
     client_storage_provider: {
       type: DataTypes.STRING(36),
       allowNull: true,
-      unique: "uk_jkuwuvd56ontgsuhogm8uewrt"
+      unique: "uk_external_consent"
     },
     external_client_id: {
       type: DataTypes.STRING(255),
       allowNull: true,
-      unique: "uk_jkuwuvd56ontgsuhogm8uewrt"
+      unique: "uk_external_consent"
     }
   }, {
     sequelize,
@@ -58,12 +58,19 @@ module.exports = function(sequelize, DataTypes) {
         ]
       },
       {
-        name: "uk_jkuwuvd56ontgsuhogm8uewrt",
+        name: "uk_external_consent",
+        unique: true,
+        fields: [
+          { name: "client_storage_provider" },
+          { name: "external_client_id" },
+          { name: "user_id" },
+        ]
+      },
+      {
+        name: "uk_local_consent",
         unique: true,
         fields: [
           { name: "client_id" },
-          { name: "client_storage_provider" },
-          { name: "external_client_id" },
           { name: "user_id" },
         ]
       },
