@@ -1,29 +1,27 @@
-let connections = [];
+const redis = required("../chat/redis/config/redis.config");
 
-function addConnection(socket) {
+async function addConnection(socket) {
 	const socketId = socket.id;
 	const email = socket.data.email;
 
-	connections.push({ email: email, socketId: socketId });
-
+	await redis.sadd(`user:${email}:connections`, socketId);
 	console.log(`User ${email} has established connection ${socketId}`);
 }
 
-function removeConnection(socket) {
+async function removeConnection(socket) {
 	const socketId = socket.id;
 	const email = socket.data.email;
 
-	connections = connections.filter(
-		(connection) => connection.socketId !== socketId
-	);
-
+	await redis.srem(`user:${email}:connections`, socketId);
 	console.log(`User ${email} has broken connection ${socketId}.`);
 }
 
+async function getConnections(email) {
+	return await redis.smembers(`user:${email}:connections`);
+}
+
 module.exports = {
-	get connections() {
-		return connections;
-	},
 	addConnection,
 	removeConnection,
+	getConnections,
 };
