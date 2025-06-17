@@ -41,7 +41,9 @@ router.post(
 				"name",
 				chatroomName,
 				"participants",
-				JSON.stringify(participantEmails)
+				JSON.stringify(participantEmails),
+				"created_at",
+				Date.now()
 			);
 
 			const pipeline = redis.pipeline();
@@ -57,10 +59,49 @@ router.post(
 				chatroom,
 			});
 		} catch (error) {
-			console.error("Chatroom creation error:", error);
+			console.error("Unexpected error: ", error);
 			res.status(500).json({
 				message: "Internal server error",
 			});
 		}
 	}
 );
+
+router.get("/", verifyToken, checkTokenEmail, async (req, res) => {
+	try {
+		const email = req.email;
+		const chatroomIds = await redis.smembers(`user:${email}:chatrooms`);
+		if (chatroomIds.length === 0) {
+			return res.status(200).json({ chatrooms: [] });
+		}
+
+		const pipeline = redis.pipeline();
+		chatroomIds.forEach((id) => {
+			pipeline.hgetall(`chatroom:${id}`);
+		});
+		const results = await pipeline.exec();
+
+		const chatrooms = results
+			.map(([err, data]) => {
+				if (err) return null;
+				if (data.participants) {
+					try {
+						data.participants = JSON.parse(data.participants);
+					} catch (_) {
+						data.participants = [];
+					}
+				}
+				data.created_at = Number(data.created_at || 0);
+				return data;
+			})
+			.filter(Boolean)
+			.sort((a, b) => b.created_at - a.created_at);
+
+		res.status(200).json({ chatrooms: chatrooms });
+	} catch (error) {
+		console.error("Unexpected error: ", error);
+		res.status(500).json({
+			message: "Internal server error",
+		});
+	}
+});
