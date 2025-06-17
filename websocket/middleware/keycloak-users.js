@@ -10,7 +10,6 @@ async function verifyParticipants(req, res, next) {
 			participantEmails.length == 0
 		) {
 			return res.status(400).json({
-				code: "Invalid participants",
 				message: "Participant emails (non-empty array) are required",
 			});
 		}
@@ -18,7 +17,6 @@ async function verifyParticipants(req, res, next) {
 		const uniqueIds = new Set(participantEmails);
 		if (uniqueIds.size !== participantEmails.length) {
 			return res.status(400).json({
-				code: "Duplicate participants",
 				message: "Duplicate users found",
 			});
 		}
@@ -33,7 +31,6 @@ async function verifyParticipants(req, res, next) {
 		});
 		if (existingUsers.length !== participantEmails.length) {
 			return res.status(400).json({
-				code: "Invalid users",
 				message: "Some users do not exist",
 			});
 		}
@@ -41,9 +38,9 @@ async function verifyParticipants(req, res, next) {
 		req.users = existingUsers;
 		next();
 	} catch (error) {
+		console.error("Unexpected error: ", error);
 		res.status(500).json({
-			code: "Internal server error",
-			error: error,
+			message: "Internal server error",
 		});
 	}
 }

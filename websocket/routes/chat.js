@@ -34,15 +34,32 @@ router.post(
 				participants: participantEmails,
 			};
 
-			await redis.set(`chatroom:${chatroomId}`, JSON.stringify(chatroom));
+			await redis.hset(
+				`chatroom:${chatroomId}`,
+				"id",
+				chatroomId,
+				"name",
+				chatroomName,
+				"participants",
+				JSON.stringify(participantEmails)
+			);
+
+			const pipeline = redis.pipeline();
+			participantEmails.forEach((email) => {
+				pipeline.sadd(`chatroom:${chatroomId}:participants`, email);
+				pipeline.sadd(`user:${email}:chatrooms`, chatroomId);
+			});
+			await pipeline.exec();
+
+			console.log("Chatroom created successfully");
 			res.status(201).json({
 				message: "Chatroom created successfully",
 				chatroom,
 			});
 		} catch (error) {
+			console.error("Chatroom creation error:", error);
 			res.status(500).json({
-				code: "Internal server error",
-				error: error,
+				message: "Internal server error",
 			});
 		}
 	}
