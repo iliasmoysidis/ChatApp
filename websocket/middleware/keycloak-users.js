@@ -9,16 +9,18 @@ async function verifyParticipants(req, res, next) {
 			!Array.isArray(participantEmails) ||
 			participantEmails.length == 0
 		) {
-			return res
-				.status(400)
-				.send("Participant emails (non-empty array) are required");
+			return res.status(400).json({
+				code: "Invalid participants",
+				message: "Participant emails (non-empty array) are required",
+			});
 		}
 
 		const uniqueIds = new Set(participantEmails);
 		if (uniqueIds.size !== participantEmails.length) {
-			return res
-				.status(400)
-				.send("Participant must be unique. Duplicate users found.");
+			return res.status(400).json({
+				code: "Duplicate participants",
+				message: "Duplicate users found",
+			});
 		}
 
 		const existingUsers = await keycloakModels.user_entity.findAll({
@@ -27,14 +29,22 @@ async function verifyParticipants(req, res, next) {
 					[Op.in]: participantEmails,
 				},
 			},
+			attributes: ["email", "first_name", "last_name", "username"],
 		});
 		if (existingUsers.length !== participantEmails.length) {
-			return res.status(400).send("Some users do not exist");
+			return res.status(400).json({
+				code: "Invalid users",
+				message: "Some users do not exist",
+			});
 		}
 
+		req.users = existingUsers;
 		next();
 	} catch (error) {
-		return res.status(500).send("Internal server error");
+		res.status(500).json({
+			code: "Internal server error",
+			error: error,
+		});
 	}
 }
 
