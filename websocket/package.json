@@ -17,6 +17,7 @@
 		"ioredis": "^5.6.1",
 		"jsonwebtoken": "^9.0.2",
 		"jwks-rsa": "^3.2.0",
+		"sequelize": "^6.37.7",
 		"socket.io": "^4.8.1",
 		"util": "^0.12.5"
 	},
