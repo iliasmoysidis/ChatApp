@@ -132,6 +132,7 @@ router.delete(
 			if (participantSet.length === 0) {
 				await redis.del(`chatroom:${chatroomId}`);
 				await redis.del(`chatroom:${chatroomId}:participants`);
+				await redis.del(`chatroom:${chatroomId}:messages`);
 			}
 
 			res.status(200).json({

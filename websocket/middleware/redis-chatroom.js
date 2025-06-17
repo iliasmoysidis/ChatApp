@@ -18,4 +18,20 @@ async function verifyChatroom(req, res, next) {
 	}
 }
 
-module.exports = { verifyChatroom };
+async function verifyMessage(req, res, next) {
+	try {
+		const { message } = req.body;
+		if (typeof message !== "string") {
+			return res.status(400).json({ message: "Invalid message content" });
+		}
+
+		next();
+	} catch (error) {
+		console.error("Unexpected error: ", error);
+		res.status(500).json({
+			message: "Internal server error",
+		});
+	}
+}
+
+module.exports = { verifyChatroom, verifyMessage };
