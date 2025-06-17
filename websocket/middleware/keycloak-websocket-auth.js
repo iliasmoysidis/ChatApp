@@ -9,16 +9,6 @@ const jwksUri = `${KEYCLOAK_DOMAIN}/realms/${REALM_NAME}/protocol/openid-connect
 
 const client = jwksClient({ jwksUri });
 
-async function getKey(kid) {
-	const getSigningKey = util.promisify(client.getSigningKey).bind(client);
-	try {
-		const key = await getSigningKey(kid);
-		return key.publicKey || key.rsaPublicKey;
-	} catch (error) {
-		throw new Error(`Error retrieving public key: ${error.message}`);
-	}
-}
-
 function handleJwtCallback(resolve, reject) {
 	return (err, decodedToken) => {
 		if (err) {
@@ -27,6 +17,22 @@ function handleJwtCallback(resolve, reject) {
 			resolve(decodedToken);
 		}
 	};
+}
+
+function emitSocketErrorAndDisconnect(socket, code, message) {
+	console.log(message);
+	socket.emit("error", { code: code, message: message });
+	return socket.disconnect(true);
+}
+
+async function getKey(kid) {
+	const getSigningKey = util.promisify(client.getSigningKey).bind(client);
+	try {
+		const key = await getSigningKey(kid);
+		return key.publicKey || key.rsaPublicKey;
+	} catch (error) {
+		throw new Error(`Error retrieving public key: ${error.message}`);
+	}
 }
 
 function verifyJwt(token, publicKey) {
@@ -44,12 +50,6 @@ function verifyJwt(token, publicKey) {
 			handleJwtCallback(resolve, reject)
 		);
 	});
-}
-
-function emitSocketErrorAndDisconnect(socket, code, message) {
-	console.log(message);
-	socket.emit("error", { code: code, message: message });
-	return socket.disconnect(true);
 }
 
 async function verifyToken(socket, next) {
@@ -72,6 +72,7 @@ async function verifyToken(socket, next) {
 		const publicKey = await getKey(kid);
 
 		const decodedToken = await verifyJwt(token, publicKey);
+		socket.data.decodedToken = decodedToken;
 
 		next();
 	} catch (error) {
@@ -79,4 +80,27 @@ async function verifyToken(socket, next) {
 	}
 }
 
-module.exports = { verifyToken };
+function checkTokenEmail(socket, next) {
+	try {
+		const decodedToken = socket.data.decodedToken;
+		const email = decodedToken["email"];
+		if (!email) {
+			return emitSocketErrorAndDisconnect(
+				socket,
+				400,
+				"Email not found in token"
+			);
+		}
+		socket.data.email = email;
+
+		next();
+	} catch (error) {
+		return emitSocketErrorAndDisconnect(
+			socket,
+			500,
+			"Internal server error"
+		);
+	}
+}
+
+module.exports = { verifyToken, checkTokenEmail };

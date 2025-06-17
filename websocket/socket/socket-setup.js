@@ -1,13 +1,19 @@
-const { verifyToken } = require("../middleware/keycloak-websocket-auth");
+const { removeConnection, addConnection } = require("./user-manager");
+const {
+	verifyToken,
+	checkTokenEmail,
+} = require("../middleware/keycloak-websocket-auth");
 
 function setupSocket(io) {
 	io.use(verifyToken);
+	io.use(checkTokenEmail);
+
 	io.on("connect", (socket) => {
-		console.log(`User ${socket.id} has connected`);
+		addConnection(socket);
 		socket.on("disconnect", () => {
-			console.log(`User ${socket.id} has disconnected`);
+			removeConnection(socket);
 		});
 	});
 }
 
-module.exports = { setupSocket };
+module.exports = setupSocket;
