@@ -7,84 +7,67 @@ const REALM_NAME = process.env.REALM_NAME;
 const ENCRYPTION_ALGORITHM = process.env.ENCRYPTION_ALGORITHM;
 const jwksUri = `${KEYCLOAK_DOMAIN}/realms/${REALM_NAME}/protocol/openid-connect/certs`;
 
-const client = jwksClient({ jwksUri });
-const getSigningKey = util.promisify(client.getSigningKey).bind(client);
+const client = jwksClient({
+	jwksUri: jwksUri,
+});
 
 const verifyAsync = util.promisify(jwt.verify);
-
-function emitSocketErrorAndDisconnect(socket, code, message) {
-	console.log(message);
-	socket.emit("error", { code: code, message: message });
-	return socket.disconnect(true);
-}
+const getSigningKey = util.promisify(client.getSigningKey).bind(client);
 
 async function getKey(kid) {
 	try {
 		const key = await getSigningKey(kid);
 		return key.publicKey || key.rsaPublicKey;
 	} catch (error) {
-		throw new Error(`Error retrieving public key: ${error.message}`);
+		throw new Error("Error retrieving the public key");
 	}
 }
 
 async function verifyJwt(token, publicKey) {
 	const options = {
 		algorithms: [ENCRYPTION_ALGORITHM],
-		issuer: `http://localhost:8080/realms/${REALM_NAME}`,
+		issuer: `${KEYCLOAK_DOMAIN}/realms/${REALM_NAME}`,
 		audience: undefined,
 	};
 
 	return await verifyAsync(token, publicKey, options);
 }
 
-async function verifyToken(socket, next) {
+async function verifyToken(req, res, next) {
 	try {
-		const token = socket.handshake.auth?.token;
+		const token = req.headers.authorization?.split(" ")[1];
 		if (!token) {
-			return emitSocketErrorAndDisconnect(
-				socket,
-				401,
-				"Token is required"
-			);
+			return res.status(401).send("Token is required");
 		}
 
 		const decoded = jwt.decode(token, { complete: true });
 		if (!decoded || !decoded.header.kid) {
-			return emitSocketErrorAndDisconnect(socket, 401, "Invalid token");
+			return res.status(401).send("Invalid token");
 		}
 
 		const kid = decoded.header.kid;
 		const publicKey = await getKey(kid);
-
 		const decodedToken = await verifyJwt(token, publicKey);
-		socket.data.decodedToken = decodedToken;
 
+		req.user = decodedToken;
 		next();
 	} catch (error) {
-		return emitSocketErrorAndDisconnect(socket, 500, error.message);
+		return res.status(401).send("Invalid token");
 	}
 }
 
-function checkTokenEmail(socket, next) {
+function checkTokenEmail(req, res, next) {
 	try {
-		const decodedToken = socket.data.decodedToken;
+		const decodedToken = req.user;
 		const email = decodedToken["email"];
 		if (!email) {
-			return emitSocketErrorAndDisconnect(
-				socket,
-				400,
-				"Email not found in token"
-			);
+			return res.status(400).send("Email not found in token");
 		}
-		socket.data.email = email;
 
+		req.email = email;
 		next();
 	} catch (error) {
-		return emitSocketErrorAndDisconnect(
-			socket,
-			500,
-			"Internal server error"
-		);
+		return res.status(500).send("Internal server error");
 	}
 }
 
