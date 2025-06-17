@@ -45,4 +45,21 @@ async function verifyParticipants(req, res, next) {
 	}
 }
 
-module.exports = { verifyParticipants };
+async function verifySearchString(req, res, next) {
+	try {
+		const searchString = req.query.searchString;
+		if (!searchString) {
+			return res
+				.status(400)
+				.json({ message: "Search string is required" });
+		}
+		next();
+	} catch (error) {
+		console.error("Unexpected error: ", error);
+		res.status(500).json({
+			message: "Internal server error",
+		});
+	}
+}
+
+module.exports = { verifyParticipants, verifySearchString };
