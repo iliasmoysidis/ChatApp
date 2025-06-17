@@ -1,4 +1,3 @@
-const express = require("express");
 const userRoutes = require("./user-routes");
 const chatRoutes = require("./chat-routes");
 

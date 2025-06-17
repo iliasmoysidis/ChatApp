@@ -3,9 +3,8 @@ require("dotenv").config();
 const express = require("express");
 const http = require("http");
 const socketIO = require("socket.io");
-const verifyToken = require("./middleware/keycloak-websocket-auth");
 const { setupSocket } = require("./socket/socket-setup");
-const redis = require("./database/redis/config/redis.config");
+const { setupRoutes } = require("./routes/index");
 
 const app = express();
 app.use(express.json());
@@ -16,6 +15,7 @@ const io = socketIO(server, {
 	},
 });
 
+setupRoutes(app);
 setupSocket(io);
 
 const PORT = process.env.PORT || 3000;
