@@ -58,8 +58,8 @@ services:
         env_file:
             - .env
 
-    websocket-server:
-        container_name: websocket
+    backend-server:
+        container_name: backend
         restart: always
         build:
             context: ./websocket
@@ -73,55 +73,6 @@ services:
                 condition: service_healthy
             redis:
                 condition: service_healthy
-        env_file:
-            - .env
-
-    backend-server:
-        container_name: backend
-        restart: always
-        build:
-            context: ./backend
-            dockerfile: Dockerfile
-        ports:
-            - "4000:${BACKEND_PORT}"
-        volumes:
-            - ./backend:/usr/src/app
-        depends_on:
-            keycloak-db:
-                condition: service_healthy
-            chat-db:
-                condition: service_healthy
-        env_file:
-            - .env
-
-    chat-db:
-        container_name: ${CHAT_DB_HOST}
-        image: postgres:15
-        volumes:
-            - chat_data:/var/lib/postgresql/data
-        environment:
-            POSTGRES_DB: ${CHAT_DB_DATABASE}
-            POSTGRES_USER: ${CHAT_DB_USERNAME}
-            POSTGRES_PASSWORD: ${CHAT_DB_PASSWORD}
-        command: ["postgres", "-p", "6432"]
-        healthcheck:
-            test:
-                [
-                    "CMD",
-                    "pg_isready",
-                    "-U",
-                    "${CHAT_DB_USERNAME}",
-                    "-d",
-                    "${CHAT_DB_DATABASE}",
-                    "-p",
-                    "${CHAT_DB_PORT}",
-                ]
-            interval: 10s
-            retries: 5
-            start_period: 10s
-            timeout: 5s
-        ports:
-            - "${CHAT_DB_PORT}:${CHAT_DB_PORT}"
         env_file:
             - .env
 

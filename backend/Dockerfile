@@ -13,9 +13,7 @@ RUN npm install
 COPY . .
 
 # Expose the port
-EXPOSE 4000
+EXPOSE 3000
 
 # Command to run the application using nodemon
-# CMD ["npm", "run", "dev"]
-CMD ["sh", "-c", "node database/keycloak/sequelize/generate-models.js && npm run migrate && npm run dev"]
-
+CMD ["sh", "-c", "node database/keycloak/sequelize/generate-models.js && npm run dev"]
