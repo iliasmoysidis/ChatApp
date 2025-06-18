@@ -62,12 +62,12 @@ services:
         container_name: backend
         restart: always
         build:
-            context: ./websocket
+            context: ./backend
             dockerfile: Dockerfile
         ports:
             - "3000:${PORT}"
         volumes:
-            - ./websocket:/usr/src/app
+            - ./backend:/usr/src/app
         depends_on:
             keycloak-db:
                 condition: service_healthy
