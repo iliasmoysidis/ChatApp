@@ -18,6 +18,28 @@ async function verifyChatroom(req, res, next) {
 	}
 }
 
+async function verifyUserBelongsToChatroom(req, res, next) {
+	try {
+		const chatroomId = req.params.id;
+		const email = req.email;
+		const isMember = await redis.sismember(
+			`chatroom:${chatroomId}:participants`,
+			email
+		);
+		if (!isMember) {
+			return res
+				.status(403)
+				.json({ message: "User does not belong in chatroom" });
+		}
+		next();
+	} catch (error) {
+		console.error("Unexpected error: ", error);
+		res.status(500).json({
+			message: "Internal server error",
+		});
+	}
+}
+
 async function verifyMessage(req, res, next) {
 	try {
 		const { message } = req.body;
@@ -34,4 +56,4 @@ async function verifyMessage(req, res, next) {
 	}
 }
 
-module.exports = { verifyChatroom, verifyMessage };
+module.exports = { verifyChatroom, verifyUserBelongsToChatroom, verifyMessage };

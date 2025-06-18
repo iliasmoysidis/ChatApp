@@ -6,15 +6,18 @@ const {
 } = require("../middleware/keycloak-api-auth");
 const {
 	verifyChatroom,
+	verifyUserBelongsToChatroom,
 	verifyMessage,
 } = require("../middleware/redis-chatroom");
 const { redis } = require("../database/redis/config/redis.config");
+const io = require("../socket/index");
 
 router.post(
 	"/:id",
 	verifyToken,
 	checkTokenEmail,
 	verifyChatroom,
+	verifyUserBelongsToChatroom,
 	verifyMessage,
 	async (req, res) => {
 		try {
@@ -36,6 +39,8 @@ router.post(
 				`chatroom:${chatroomId}:messages`,
 				JSON.stringify(messageObj)
 			);
+
+			io.to(`chatroom:${chatroomId}`).emit("newMessage", messageObj);
 			return res.status(201).json({ message: "Message sent" });
 		} catch (error) {
 			console.error("Unexpected error: ", error);
