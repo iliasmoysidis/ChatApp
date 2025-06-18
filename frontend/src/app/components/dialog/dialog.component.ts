@@ -40,9 +40,6 @@ export class DialogComponent {
   }
 
   sendMessage(event: any) {
-    const newMessage = {
-      message: event.message,
-    };
     if (this.chat != null && this.chat.id != null) {
       this.apiService.sendMessage(this.chat.id, event.message);
     }
