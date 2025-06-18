@@ -20,12 +20,16 @@ router.post(
 		try {
 			const { message } = req.body;
 			const chatroomId = req.params.id;
-			const sender = req.email;
 
 			const messageObj = {
-				sender,
-				message: message.trim(),
-				timestamp: Date.now(),
+				type: "text",
+				text: message.trim(),
+				reply: null,
+				date: Date.now().toISOString(),
+				user: {
+					name: req.user.name,
+					email: req.email,
+				},
 			};
 
 			await redis.rpush(
@@ -41,3 +45,29 @@ router.post(
 		}
 	}
 );
+
+router.get(
+	"/:id",
+	verifyToken,
+	checkTokenEmail,
+	verifyChatroom,
+	async (req, res) => {
+		try {
+			const chatroomId = req.params.id;
+			const rawMessages = await redis.lrange(
+				`chatroom:${chatroomId}:messages`,
+				0,
+				-1
+			);
+			const messages = rawMessages.map(JSON.parse);
+			return res.status(200).json(messages);
+		} catch (error) {
+			console.error("Unexpected error: ", error);
+			res.status(500).json({
+				message: "Internal server error",
+			});
+		}
+	}
+);
+
+module.exports = router;
