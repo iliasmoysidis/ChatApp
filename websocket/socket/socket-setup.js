@@ -9,32 +9,29 @@ function setupSocket(io) {
 	io.use(checkTokenEmail);
 
 	io.on("connect", (socket) => {
+		const email = socket.data.email;
 		addConnection(socket);
 
 		socket.on("joinChatroom", async (chatroomId) => {
 			const isMember = await redis.sismember(
 				`chatroom:${chatroomId}:participants`,
-				socket.data.email
+				email
 			);
 
 			if (!isMember) {
 				console.log(
-					`Unauthorized join attempt: ${socket.data.email} to chatroom ${chatroomId}`
+					`Unauthorized join attempt: ${email} to chatroom ${chatroomId}`
 				);
 				return socket.emit("error", "Unauthorized");
 			}
 
 			socket.join(`chatroom:${chatroomId}`);
-			console.log(
-				`User ${socket.data.email} joined chatroom:${chatroomId}`
-			);
+			console.log(`User ${email} joined chatroom:${chatroomId}`);
 		});
 
 		socket.on("leaveChatroom", (chatroomId) => {
 			socket.leave(`chatroom:${chatroomId}`);
-			console.log(
-				`User ${socket.data.email} left chatroom:${chatroomId}`
-			);
+			console.log(`User ${email} left chatroom:${chatroomId}`);
 		});
 
 		socket.on("disconnect", () => {
