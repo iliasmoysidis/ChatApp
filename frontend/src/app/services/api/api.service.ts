@@ -31,4 +31,16 @@ export class ApiService {
   deleteChat(id: string) {
     return this.http.delete(`${environment.backend.url}/api/chats/${id}`);
   }
+
+  sendMessage(id: string, message: string) {
+    return this.http.post(`${environment.backend.url}/api/messages/${id}`, {
+      message,
+    });
+  }
+
+  getMessages(id: string): Observable<any[]> {
+    return this.http.get<any[]>(
+      `${environment.backend.url}/api/messages/${id}`
+    );
+  }
 }
