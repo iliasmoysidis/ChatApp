@@ -100,5 +100,4 @@ services:
 
 volumes:
     keycloak_data:
-    chat_data:
     redis_data:
