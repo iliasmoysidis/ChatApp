@@ -10,7 +10,7 @@ const {
 	verifyMessage,
 } = require("../middleware/redis-chatroom");
 const { redis } = require("../database/redis/config/redis.config");
-const io = require("../socket/index");
+const { getIO } = require("../socket/index");
 
 router.post(
 	"/:id",
@@ -21,6 +21,7 @@ router.post(
 	verifyMessage,
 	async (req, res) => {
 		try {
+			const io = getIO();
 			const { message } = req.body;
 			const chatroomId = req.params.id;
 
@@ -28,7 +29,7 @@ router.post(
 				type: "text",
 				text: message.trim(),
 				reply: null,
-				date: Date.now().toISOString(),
+				date: new Date().toISOString(),
 				user: {
 					name: req.user.name,
 					email: req.email,

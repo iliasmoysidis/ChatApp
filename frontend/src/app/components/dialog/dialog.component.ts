@@ -60,7 +60,14 @@ export class DialogComponent {
 
   sendMessage(event: any) {
     if (this.chat != null && this.chat.id != null) {
-      this.apiService.sendMessage(this.chat.id, event.message);
+      this.apiService.sendMessage(this.chat.id, event.message).subscribe({
+        next: (res) => {
+          console.log('Message sent successfully:', res);
+        },
+        error: (err) => {
+          console.error('Error sending message:', err);
+        },
+      });
     }
   }
 }
