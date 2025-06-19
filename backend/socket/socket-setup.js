@@ -3,6 +3,7 @@ const {
 	verifyToken,
 	checkTokenEmail,
 } = require("../middleware/keycloak-websocket-auth");
+const { redis } = require("../database/redis/config/redis.config");
 
 function setupSocket(io) {
 	io.use(verifyToken);

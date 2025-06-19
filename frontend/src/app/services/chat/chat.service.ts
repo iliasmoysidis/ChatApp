@@ -4,6 +4,7 @@ import { Chat } from '../../interfaces/chat.interface';
 import { ApiService } from '../api/api.service';
 import { User } from '../../interfaces/user.interface';
 import { AuthService } from '../auth/auth.service';
+import { SocketService } from '../socket/socket.service';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +18,8 @@ export class ChatService {
 
   constructor(
     private readonly apiService: ApiService,
-    private readonly authService: AuthService
+    private readonly authService: AuthService,
+    private readonly socketService: SocketService
   ) {
     this.getUserChats();
   }
@@ -64,6 +66,9 @@ export class ChatService {
 
   updateChat(chat: Chat) {
     this.chatSource.next(chat);
+    if (chat && chat.id) {
+      this.socketService.joinChatroom(chat.id);
+    }
   }
 
   get chat(): Chat | null {

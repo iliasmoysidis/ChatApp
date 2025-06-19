@@ -33,7 +33,6 @@ export class ApiService {
   }
 
   sendMessage(id: string, message: string) {
-    console.log(`${environment.backend.url}/api/messages/${id}`);
     return this.http.post(`${environment.backend.url}/api/messages/${id}`, {
       message,
     });

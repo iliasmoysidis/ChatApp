@@ -42,6 +42,6 @@ export class SocketService {
     if (this.currentRoom) {
       this.leaveChatroom(this.currentRoom);
     }
-    this.socket.removeAllListeners(); // Optional: removes all listeners
+    this.socket.removeAllListeners();
   }
 }
