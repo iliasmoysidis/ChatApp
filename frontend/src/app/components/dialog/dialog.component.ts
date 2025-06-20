@@ -7,6 +7,7 @@ import { Chat } from '../../interfaces/chat.interface';
 import { ApiService } from '../../services/api/api.service';
 import { filter, Subscription, switchMap } from 'rxjs';
 import { SocketService } from '../../services/socket/socket.service';
+import { MessageService } from '../../services/message/message.service';
 
 @Component({
   selector: 'app-dialog',
@@ -22,7 +23,8 @@ export class DialogComponent {
   constructor(
     private chatService: ChatService,
     private apiService: ApiService,
-    private socketService: SocketService
+    private socketService: SocketService,
+    public messageService: MessageService
   ) {}
 
   ngOnInit() {
@@ -32,11 +34,12 @@ export class DialogComponent {
           filter((chat) => !!chat),
           switchMap((chat) => {
             this.chat = chat;
+            this.messageService.title = chat.name;
             return this.apiService.getMessages(chat.id);
           })
         )
         .subscribe((messages) => {
-          this.messages = messages.map((m) => ({
+          this.messageService.messages = messages.map((m) => ({
             ...m,
             date: new Date(m.date),
           }));
@@ -45,7 +48,7 @@ export class DialogComponent {
 
     this.subscriptions.add(
       this.socketService.message$.subscribe((message) => {
-        this.messages.push({
+        this.messageService.messages.push({
           ...message,
           date: new Date(message.date),
         });

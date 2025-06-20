@@ -11,6 +11,7 @@ import {
 import { ChatService } from '../../services/chat/chat.service';
 import { ApiService } from '../../services/api/api.service';
 import { Chat } from '../../interfaces/chat.interface';
+import { MessageService } from '../../services/message/message.service';
 
 @Component({
   selector: 'app-chats',
@@ -30,7 +31,10 @@ export class ChatsComponent {
   selectedChat: Chat | null = null;
   chats: Chat[] = [];
 
-  constructor(private readonly chatService: ChatService) {
+  constructor(
+    private readonly chatService: ChatService,
+    private messageService: MessageService
+  ) {
     this.chatService.currentChat$.subscribe((chat) => {
       this.selectedChat = chat;
     });
@@ -47,5 +51,7 @@ export class ChatsComponent {
 
   deleteChat(chat: Chat) {
     this.chatService.deleteChat(chat);
+    this.messageService.messages = [];
+    this.messageService.title = 'Welcome to Chat App';
   }
 }
