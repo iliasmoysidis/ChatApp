@@ -1,6 +1,16 @@
 version: "3.6"
 
 services:
+    webserver:
+        container_name: nginx
+        image: "nginx:alpine"
+        restart: unless-stopped
+        ports:
+            - "80:80"
+            - "443:443"
+        env_file:
+            - .env
+
     keycloak-server:
         image: quay.io/keycloak/keycloak:latest
         container_name: keycloak
