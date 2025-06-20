@@ -16,6 +16,7 @@ export class AuthService {
   public readonly isAuthenticated = this._isAuthenticated.asReadonly();
   private readonly _decodedToken = signal<any>(null);
   public readonly decodedToken = this._decodedToken.asReadonly();
+  public decodedTokenValue: any = null;
 
   private decodeToken(token: string): any {
     try {
@@ -37,17 +38,21 @@ export class AuthService {
         this._isAuthenticated.set(isAuth);
 
         if (isAuth) {
-          this._decodedToken.set(this.decodeToken(this.keycloak.token!));
+          const decoded = this.decodeToken(this.keycloak.token!);
+          this._decodedToken.set(decoded);
+          this.decodedTokenValue = decoded;
           this.socket.ioSocket.auth = { token: this.keycloak.token };
           this.socket.connect();
         } else {
           this._decodedToken.set(null);
+          this.decodedTokenValue = null;
         }
       }
 
       if (keycloakEvent.type === KeycloakEventType.AuthLogout) {
         this._isAuthenticated.set(false);
         this._decodedToken.set(null);
+        this.decodedTokenValue = null;
         this.socket.disconnect();
       }
     });

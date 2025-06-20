@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { NbCardModule, NbChatModule } from '@nebular/theme';
 import { ChatService } from '../../services/chat/chat.service';
-import { User } from '../../interfaces/user.interface';
 import { CommonModule } from '@angular/common';
 import { Chat } from '../../interfaces/chat.interface';
 import { ApiService } from '../../services/api/api.service';
 import { filter, Subscription, switchMap } from 'rxjs';
 import { SocketService } from '../../services/socket/socket.service';
 import { MessageService } from '../../services/message/message.service';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-dialog',
@@ -19,12 +19,14 @@ export class DialogComponent {
   private subscriptions = new Subscription();
   messages: any[] = [];
   chat: Chat | null = null;
+  email: string = '';
 
   constructor(
     private chatService: ChatService,
     private apiService: ApiService,
     private socketService: SocketService,
-    public messageService: MessageService
+    public messageService: MessageService,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
@@ -41,6 +43,10 @@ export class DialogComponent {
         .subscribe((messages) => {
           this.messageService.messages = messages.map((m) => ({
             ...m,
+            reply:
+              this.authService.decodedTokenValue.email == m.user.email
+                ? false
+                : true,
             date: new Date(m.date),
           }));
         })
@@ -50,6 +56,10 @@ export class DialogComponent {
       this.socketService.message$.subscribe((message) => {
         this.messageService.messages.push({
           ...message,
+          reply:
+            this.authService.decodedTokenValue.email == message.user.email
+              ? false
+              : true,
           date: new Date(message.date),
         });
       })
