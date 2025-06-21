@@ -44,4 +44,8 @@ export class SocketService {
     }
     this.socket.removeAllListeners();
   }
+
+  on(event: string, callback: (data: any) => void) {
+    this.socket.on(event, callback);
+  }
 }

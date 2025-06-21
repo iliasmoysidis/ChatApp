@@ -7,6 +7,8 @@ const {
 const { verifyParticipants } = require("../middleware/keycloak-users");
 const { redis } = require("../database/redis/config/redis.config");
 const { verifyChatroom } = require("../middleware/redis-chatroom");
+const { getIO } = require("../socket/index");
+const { getConnections } = require("../socket/user-manager");
 
 function createChatName(users) {
 	const names = users.map((u) => u.first_name);
@@ -24,6 +26,7 @@ router.post(
 	verifyParticipants,
 	async (req, res) => {
 		try {
+			const io = getIO();
 			const participantEmails = req.body;
 			const users = req.users;
 			const chatroomId = await redis.incr("chatroom:next_id");
@@ -53,6 +56,13 @@ router.post(
 				pipeline.sadd(`user:${email}:chatrooms`, chatroomId);
 			});
 			await pipeline.exec();
+
+			for (const email of participantEmails) {
+				const connections = await getConnections(email);
+				connections.forEach((socketId) => {
+					io.to(socketId).emit("chatroomCreated", chatroom);
+				});
+			}
 
 			console.log("Chatroom created successfully");
 			res.status(201).json({

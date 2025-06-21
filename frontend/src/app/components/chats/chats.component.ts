@@ -9,9 +9,9 @@ import {
   NbUserModule,
 } from '@nebular/theme';
 import { ChatService } from '../../services/chat/chat.service';
-import { ApiService } from '../../services/api/api.service';
 import { Chat } from '../../interfaces/chat.interface';
 import { MessageService } from '../../services/message/message.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-chats',
@@ -28,6 +28,7 @@ import { MessageService } from '../../services/message/message.service';
   styleUrl: './chats.component.css',
 })
 export class ChatsComponent {
+  private subscriptions = new Subscription();
   selectedChat: Chat | null = null;
   chats: Chat[] = [];
 
@@ -35,13 +36,17 @@ export class ChatsComponent {
     private readonly chatService: ChatService,
     private messageService: MessageService
   ) {
-    this.chatService.currentChat$.subscribe((chat) => {
-      this.selectedChat = chat;
-    });
+    this.subscriptions.add(
+      this.chatService.currentChat$.subscribe((chat) => {
+        this.selectedChat = chat;
+      })
+    );
 
-    this.chatService.chats$.subscribe((chats) => {
-      this.chats = chats;
-    });
+    this.subscriptions.add(
+      this.chatService.chats$.subscribe((chats) => {
+        this.chats = chats;
+      })
+    );
   }
 
   onClick(chat: Chat) {
@@ -53,5 +58,9 @@ export class ChatsComponent {
     this.chatService.deleteChat(chat);
     this.messageService.messages = [];
     this.messageService.title = 'Welcome to Chat App';
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
 }

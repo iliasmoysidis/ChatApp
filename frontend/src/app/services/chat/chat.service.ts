@@ -22,6 +22,7 @@ export class ChatService {
     private readonly socketService: SocketService
   ) {
     this.getUserChats();
+    this.listenForNewChats();
   }
 
   private getUserChats() {
@@ -42,7 +43,6 @@ export class ChatService {
       const uniqueEmails = [...new Set(participantEmails)];
       this.apiService.createChat(uniqueEmails).subscribe({
         next: (response) => {
-          this.getUserChats();
           console.log('Chat created:', response);
         },
         error: (err) => {
@@ -77,5 +77,15 @@ export class ChatService {
 
   get chats(): Chat[] {
     return this.chatsSource.value;
+  }
+
+  private listenForNewChats() {
+    this.socketService.on('chatroomCreated', (newChat: Chat) => {
+      const currentChats = this.chatsSource.value;
+      const exists = currentChats.some((chat) => chat.id === newChat.id);
+      if (!exists) {
+        this.chatsSource.next([newChat, ...currentChats]);
+      }
+    });
   }
 }
