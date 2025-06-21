@@ -1,4 +1,3 @@
-import { environment } from '../environments/environment';
 import {
   ApplicationConfig,
   importProvidersFrom,
@@ -21,7 +20,7 @@ import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 
 const socketConfig: SocketIoConfig = {
-  url: environment.socket.url,
+  url: 'http://localhost',
   options: { autoConnect: false },
 };
 

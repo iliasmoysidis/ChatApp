@@ -1,5 +1,5 @@
 export const environment = {
-  socket: { url: 'http://localhost:3000' },
+  socket: { url: 'http://localhost' },
   keycloak: {
     url: 'http://localhost/auth',
     realm: 'chat-realm',
