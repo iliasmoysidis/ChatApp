@@ -26,7 +26,7 @@ async function getKey(kid) {
 async function verifyJwt(token, publicKey) {
 	const options = {
 		algorithms: [ENCRYPTION_ALGORITHM],
-		issuer: `http://localhost:8080/realms/${REALM_NAME}`,
+		issuer: `http://localhost/auth/realms/${REALM_NAME}`,
 		audience: undefined,
 	};
 

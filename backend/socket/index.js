@@ -6,7 +6,9 @@ let io = null;
 function initSocket(server) {
 	io = socketIO(server, {
 		cors: {
-			origin: "http://localhost:4200",
+			origin: ["http://localhost"],
+			methods: ["GET", "POST"],
+			credentials: true,
 		},
 	});
 	setupSocket(io);
