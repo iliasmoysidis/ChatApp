@@ -5,7 +5,7 @@ const { setupRoutes } = require("../routes/index");
 const app = express();
 app.use(
 	cors({
-		origin: "http://localhost",
+		origin: "https://chatapp.it.com",
 		credentials: true,
 		allowedHeaders: ["Content-Type", "Authorization"],
 	})

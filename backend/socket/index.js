@@ -6,7 +6,7 @@ let io = null;
 function initSocket(server) {
 	io = socketIO(server, {
 		cors: {
-			origin: ["http://localhost"],
+			origin: ["https://chatapp.it.com"],
 			methods: ["GET", "POST"],
 			credentials: true,
 		},
