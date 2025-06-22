@@ -26,7 +26,7 @@ async function getKey(kid) {
 async function verifyJwt(token, publicKey) {
 	const options = {
 		algorithms: [ENCRYPTION_ALGORITHM],
-		issuer: `http://localhost/auth/realms/${REALM_NAME}`,
+		issuer: `http://chatapp.it.com/auth/realms/${REALM_NAME}`,
 		audience: undefined,
 	};
 
