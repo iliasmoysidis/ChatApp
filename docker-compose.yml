@@ -32,8 +32,8 @@ services:
             KC_HTTP_RELATIVE_PATH: /auth
             KC_HOSTNAME: chatapp.it.com
             KC_HOSTNAME_PORT: 443
-            KC_HOSTNAME_STRICT: false
-            KC_HOSTNAME_STRICT_HTTPS: false
+            KC_HOSTNAME_STRICT: true
+            KC_HOSTNAME_STRICT_HTTPS: true
             KC_LOG_LEVEL: info
             KC_METRICS_ENABLED: true
             KC_HEALTH_ENABLED: true
