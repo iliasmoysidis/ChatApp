@@ -17,7 +17,7 @@ services:
         env_file:
             - .env
         depends_on:
-            - backend-server
+            - backend
 
     keycloak:
         image: quay.io/keycloak/keycloak:latest
@@ -76,7 +76,7 @@ services:
         env_file:
             - .env
 
-    backend-server:
+    backend:
         container_name: backend
         restart: always
         build:
