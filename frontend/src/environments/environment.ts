@@ -1,9 +1,9 @@
 export const environment = {
-  socket: { url: 'http://localhost' },
+  socket: { url: 'https://chatapp.it.com' },
   keycloak: {
-    url: 'http://localhost/auth',
+    url: 'https://chatapp.it.com/auth',
     realm: 'chat-realm',
     clientId: 'chat-app',
   },
-  backend: { url: 'http://localhost/backend' },
+  backend: { url: 'https://chatapp.it.com/backend' },
 };
