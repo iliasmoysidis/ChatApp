@@ -18,9 +18,10 @@ import {
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import { environment } from '../environments/environment';
 
 const socketConfig: SocketIoConfig = {
-  url: 'http://localhost',
+  url: environment.socket.url,
   options: { autoConnect: false },
 };
 
