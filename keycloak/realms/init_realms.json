@@ -21,8 +21,8 @@
 			],
 			"webOrigins": [
 				"http://localhost:4200",
-				"http://localhost/*",
-				"https://chatapp.it.com/*"
+				"http://localhost",
+				"https://chatapp.it.com"
 			],
 			"notBefore": 0,
 			"bearerOnly": false,
