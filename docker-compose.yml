@@ -27,9 +27,9 @@ services:
             KC_DB_URL: jdbc:postgresql://keycloak-db:${KEYCLOAK_DB_PORT}/keycloak
             KC_DB_USERNAME: ${KEYCLOAK_DB_USERNAME}
             KC_DB_PASSWORD: ${KEYCLOAK_DB_PASSWORD}
+            KC_FRONTEND_URL: https://chatapp.it.com/auth
             KC_HTTP_RELATIVE_PATH: /auth
             KC_HOSTNAME: chatapp.it.com
-            KC_HOSTNAME_PORT: 443
             KC_HOSTNAME_STRICT: true
             KC_HOSTNAME_STRICT_HTTPS: true
             KC_LOG_LEVEL: info
