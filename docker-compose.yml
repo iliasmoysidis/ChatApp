@@ -33,6 +33,7 @@ services:
             KC_HOSTNAME_STRICT: true
             KC_HOSTNAME_STRICT_HTTPS: true
             KC_LOG_LEVEL: info
+            KC_PROXY: edge
             KC_METRICS_ENABLED: true
             KC_HEALTH_ENABLED: true
             KC_BOOTSTRAP_ADMIN_USERNAME: ${ADMIN_USERNAME}
